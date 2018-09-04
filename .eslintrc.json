@@ -9,7 +9,10 @@
     "extends": ["eslint:recommended", "plugin:react/recommended"],
     "parserOptions": {
         "sourceType": "module",
-        "ecmaVersion": 2018
+        "ecmaVersion": 2018,
+        "ecmaFeatures": {
+            "jsx": true
+                }
     },
     "rules": {
         "indent": ["error", 4, { "SwitchCase": 4 }],
@@ -21,5 +24,14 @@
         "no-unsafe-finally": 0,
         "react/prop-types": 0,
         "react/display-name": 0
-    }
+    },
+    "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "version": "15.0",
+      "flowVersion": "0.53"
+    },
+    "propWrapperFunctions": [ "forbidExtraProps" ]
+  }
 }

@@ -1,0 +1,46 @@
+* {
+    background: teal;
+    font-family: "Helvetica";
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    color: white;
+}
+
+.registration {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 20px;
+    background: orange;
+    border: 2px solid white;
+    border-top: 80px solid white;
+    border-radius: 50px 25px 5px 5px;
+}
+
+.registration input {
+    padding: 5px;
+    margin: 5px 0;
+    border: none;
+    background: white;
+    border-radius: 5px;
+}
+
+.registration button {
+    padding: 5px;
+    margin: 5px 0;
+    background: white;
+    border-radius: 5px;
+}
+
+.error {
+
+    background: inherit;
+    text-align: center;
+}
