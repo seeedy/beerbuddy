@@ -1,13 +1,22 @@
 * {
-    background: teal;
+    background-image: url('img/blue-sky-green-grass.jpg');
+    object-fit: scale-down;
+    object-position: center;
     font-family: "Helvetica";
 }
 
 .wrapper {
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.wrapper p,
+.wrapper a,
+.wrapper h1 {
+    background: transparent;
 }
 
 h1 {
@@ -15,18 +24,19 @@ h1 {
 }
 
 .registration {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 50px 20px;
-    background: orange;
+    background: gold;
     border: 2px solid white;
     border-top: 80px solid white;
-    border-radius: 50px 25px 5px 5px;
+    border-radius: 60px 30px 20px 20px;
 }
 
 .registration input {
     padding: 5px;
-    margin: 5px 0;
+    margin: 5px 10px;
     border: none;
     background: white;
     border-radius: 5px;
@@ -34,13 +44,60 @@ h1 {
 
 .registration button {
     padding: 5px;
-    margin: 5px 0;
+    margin: 5px 10px;
     background: white;
     border-radius: 5px;
 }
 
 .error {
-
     background: inherit;
     text-align: center;
+}
+
+.drop {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+    background: white;
+	top: -8%;
+    left: -10%;
+    border-radius: 0 50% 50% 50%;
+    transform: rotate(45deg);
+	animation: drop 10s ease-out;
+}
+
+
+
+
+.foam1 {
+    width: 50%;
+	height: 30px;
+    border-radius: 50% 50%;
+	position: absolute;
+    background: white;
+	top: -8%;
+    left: 0%;
+}
+.foam2 {
+    width: 61%;
+	height: 30px;
+    border-radius: 50% 50%;
+	position: absolute;
+    background: white;
+	top: -8%;
+    left: 40%;
+
+}
+
+
+
+/* animate the drops*/
+@keyframes drop {
+  from {
+    top: -5%;
+  }
+
+  to {
+    top: 86%;
+  }
 }

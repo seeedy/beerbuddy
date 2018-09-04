@@ -4,10 +4,10 @@ import Registration from './registration';
 export default function Welcome() {
 
     let logoStyle = {
-        color: "orange",
+        color: "gold",
         fontSize: "100px",
         fontFamily: "Helvetica",
-        border: "10px solid orange",
+        border: "10px solid gold",
         padding: "10px",
         margin: "10px",
         fontWeight: 300

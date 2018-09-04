@@ -6,6 +6,9 @@ const hash = promisify(bcrypt.hash);
 const compare = promisify(bcrypt.compare);
 
 module.exports.hashPass = function(pass) {
+    if (pass == '') {
+        throw new Error;
+    }
     return genSalt().then(salt => {
         return hash(pass, salt);
     });

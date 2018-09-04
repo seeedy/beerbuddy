@@ -37,6 +37,9 @@ export default class Registration extends React.Component {
     render() {
         return (
             <div className="registration">
+                <div className="drop"></div>
+                <div className="foam1"></div>
+                <div className="foam2"></div>
 
                 <input name="first" placeholder="First name..." onChange={ this.handleChange }/>
                 <input name="last" placeholder="Last name..." onChange={ this.handleChange }/>
