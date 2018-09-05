@@ -3,10 +3,10 @@ import React from 'react';
 export default function Logo() {
 
     let logoStyle = {
-        color: "orange",
+        color: "gold",
         fontSize: "3rem",
         fontFamily: "Helvetica",
-        border: "10px solid orange",
+        border: "10px solid gold",
         padding: "10px",
         margin: "10px",
         fontWeight: 300,

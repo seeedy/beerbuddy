@@ -40,6 +40,7 @@ export default class Registration extends React.Component {
         return (
             <div className="registration">
                 <div className="drop"></div>
+                <div className="drop2"></div>
                 <div className="foam1"></div>
                 <div className="foam2"></div>
 
