@@ -14,3 +14,13 @@ module.exports.createUser = (first, last, email, pw) => {
         [first || null, last || null, email || null, pw || null]
     );
 };
+
+module.exports.getUserByEmail = (email) => {
+    return db.query(
+        `
+        SELECT * FROM users
+        WHERE email = $1
+        `,
+        [email]
+    );
+};

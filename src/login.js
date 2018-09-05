@@ -1,10 +1,8 @@
 import React from 'react';
-// const axios = require('axios');
-
 // import axios with configuration object from axios.js
 import axios from './axios';
 
-export default class Registration extends React.Component {
+export default class Login extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,10 +12,8 @@ export default class Registration extends React.Component {
     }
 
     submit() {
-        axios.post('/registration', {
+        axios.post('/login', {
             email: this.email,
-            first: this.first,
-            last: this.last,
             password: this.password,
         }).then(
             ({ data }) => {
@@ -38,13 +34,12 @@ export default class Registration extends React.Component {
 
     render() {
         return (
-            <div className="registration">
+            <div className={`registration login`}>
                 <div className="drop"></div>
                 <div className="foam1"></div>
                 <div className="foam2"></div>
 
-                <input name="first" placeholder="First name..." onChange={ this.handleChange }/>
-                <input name="last" placeholder="Last name..." onChange={ this.handleChange }/>
+
                 <input name="email" placeholder="Email..." onChange={ this.handleChange }/>
                 <input name="password" placeholder="Password..." onChange={ this.handleChange }/>
                 <button className="submit" onClick={ this.submit }>submit</button>
