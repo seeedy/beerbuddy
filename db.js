@@ -24,3 +24,14 @@ module.exports.getUserByEmail = (email) => {
         [email]
     );
 };
+
+module.exports.updateImage = (image_url, user_id) => {
+    return db.query(
+        `
+        UPDATE users
+        SET image_url = $1
+        WHERE id = $2
+        `,
+        [image_url, user_id]
+    );
+};

@@ -10,10 +10,11 @@ export default function Logo() {
         padding: "10px",
         margin: "10px",
         fontWeight: 300,
-        width: "20%"
+        width: "20%",
+        float: "left"
     };
 
     return (
-        <div style={logoStyle}>Beer Lovers</div>
+        <div className="logo" style={logoStyle}>Beer Lovers</div>
     );
 }

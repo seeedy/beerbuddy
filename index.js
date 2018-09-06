@@ -6,6 +6,30 @@ const db = require('./db');
 const bcrypt = require('./bcrypt');
 const secrets = require('./secrets.json');
 const csurf = require('csurf');
+const multer = require('multer');
+const uidSafe = require('uid-safe');
+const path = require('path');
+const s3 = require('./s3');
+const config = require('./config.json');
+
+
+const diskStorage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, __dirname + '/uploads');
+    },
+    filename: function(req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    }
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152
+    }
+});
 
 
 app.use(express.static('./public'));
@@ -71,8 +95,14 @@ app.post('/registration', (req, res) => {
         })
         .then(
             (response) => {
-                let id = response.rows[0].id;
-                req.session.user = { id };
+                let user = response.rows[0];
+                req.session.user = {
+                    id: user.id,
+                    first: user.first,
+                    last: user.last,
+                    email: user.email,
+                    imageUrl: user.image_url
+                };
                 res.json({
                     success: true
                 });
@@ -93,7 +123,14 @@ app.post('/login', (req, res) => {
             bcrypt.checkPass(password, user.password)
                 .then(match => {
                     if (match) {
-                        req.session.user = { id: user.id };
+                        req.session.user = {
+                            id: user.id,
+                            first: user.first,
+                            last: user.last,
+                            email: user.email,
+                            imageUrl: user.image_url
+                        };
+                        console.log(req.session.user);
                         res.json({
                             success: true
                         });
@@ -107,6 +144,34 @@ app.post('/login', (req, res) => {
         }).catch(
             () => res.json({ success: false })
         );
+});
+
+
+app.get('/user', (req, res) => {
+    res.json(req.session.user);
+});
+
+
+// uploader is used as middleware to handle uploads on post route
+app.post('/profilepic', uploader.single('file'), s3.upload, (req, res) => {
+    console.log('POST /upload in server', req.file);
+    // update image_url in users table
+    db.updateImage(
+        config.s3Url + req.file.filename,
+        req.session.user.id
+    )
+        .then(() => {
+            req.session.user.imageUrl = config.s3Url + req.file.filename;
+            // send back from db to vue to render
+            res.json({
+                imageUrl: req.session.user.imageUrl
+            });
+        })
+        .catch(() => {
+            res.status(500).json({
+                success: false
+            });
+        });
 });
 
 
