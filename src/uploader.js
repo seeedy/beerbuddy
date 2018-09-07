@@ -4,9 +4,10 @@ import axios from './axios';
 
 export default function Uploader(props) {
 
-    let file;
 
     function submit(e) {
+        let file;
+
         e.preventDefault();
 
         file = e.target.files[0];

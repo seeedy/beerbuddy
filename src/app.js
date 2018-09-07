@@ -8,7 +8,9 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        /// !!!!!!!! ALWAYS BIND THE METHODS TO THIS !!!!!!!
         this.showUploader = this.showUploader.bind(this);
+        this.updateImage = this.updateImage.bind(this);
     }
 
     componentDidMount() {
@@ -25,7 +27,6 @@ export default class App extends React.Component {
     }
 
     showUploader() {
-        console.log('click');
         this.setState({
             uploaderShown: true
         });
