@@ -6,5 +6,8 @@ CREATE TABLE users(
     last VARCHAR(100) NOT NULL,
     email VARCHAR(200) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
-    image_url VARCHAR(300)
+    image_url VARCHAR(300),
+    bio VARCHAR(500)
 );
+
+SELECT * FROM users;

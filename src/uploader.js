@@ -4,14 +4,11 @@ import axios from './axios';
 
 export default function Uploader(props) {
 
-
+    let file;
     function submit(e) {
-        let file;
-
         e.preventDefault();
 
         file = e.target.files[0];
-        console.log(file);
 
         const fd = new FormData;
         fd.append('file', file);
@@ -25,15 +22,18 @@ export default function Uploader(props) {
 
     return (
         <div className="uploader">
+            <div className="close-uploader"
+                onClick={ props.clickHandler }>x</div>
             <h2>Choose new profile picture</h2>
             <input
                 name="file"
+                id="file"
                 type="file"
                 accept = "image/*"
                 className="file-input"
                 onChange={submit}
             />
-            <label className="uploader-label" htmlFor="file">upload</label>
+            <label className="uploader-label"   htmlFor="file">upload</label>
         </div>
     );
 }

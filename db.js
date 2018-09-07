@@ -9,7 +9,7 @@ module.exports.createUser = (first, last, email, pw) => {
         `
         INSERT INTO users (first, last, email, password)
         VALUES($1, $2, $3, $4)
-        RETURNING id
+        RETURNING first, last, email, id, image_url
         `,
         [first || null, last || null, email || null, pw || null]
     );
@@ -33,5 +33,16 @@ module.exports.updateImage = (image_url, user_id) => {
         WHERE id = $2
         `,
         [image_url, user_id]
+    );
+};
+
+module.exports.updateBio = (bio, id) => {
+    return db.query(
+        `
+        UPDATE users
+        SET bio = $1
+        WHERE id = $2
+        `,
+        [bio, id]
     );
 };

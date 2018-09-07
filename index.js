@@ -88,13 +88,13 @@ app.get('/', (req, res) => {
 
 app.post('/registration', (req, res) => {
     let { first, last, email, password } = req.body;
-    console.log(first, last, email, password);
     bcrypt.hashPass(password).then(
         hash => {
             return db.createUser(first, last, email, hash);
         })
         .then(
             (response) => {
+                console.log('response from db:', response.rows[0]);
                 let user = response.rows[0];
                 req.session.user = {
                     id: user.id,
@@ -103,6 +103,7 @@ app.post('/registration', (req, res) => {
                     email: user.email,
                     imageUrl: user.image_url
                 };
+                console.log(req.session.user);
                 res.json({
                     success: true
                 });
@@ -153,6 +154,7 @@ app.get('/user', (req, res) => {
 
 
 // uploader is used as middleware to handle uploads on post route
+// insert profile pic to db
 app.post('/profilepic', uploader.single('file'), s3.upload, (req, res) => {
     console.log('POST /upload in server', req.file);
     // update image_url in users table
@@ -167,6 +169,17 @@ app.post('/profilepic', uploader.single('file'), s3.upload, (req, res) => {
                 imageUrl: req.session.user.imageUrl
             });
         })
+        .catch(() => {
+            res.status(500).json({
+                success: false
+            });
+        });
+});
+
+// insert bio to db
+app.post('/profile', (req, res) => {
+    console.log('bio on server', req.body.bio, req.session.user.id);
+    db.updateBio(req.body.bio, req.session.user.id)
         .catch(() => {
             res.status(500).json({
                 success: false
