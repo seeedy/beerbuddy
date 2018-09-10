@@ -129,7 +129,8 @@ app.post('/login', (req, res) => {
                             first: user.first,
                             last: user.last,
                             email: user.email,
-                            imageUrl: user.image_url
+                            imageUrl: user.image_url,
+                            bio: user.bio
                         };
                         console.log(req.session.user);
                         res.json({
@@ -178,7 +179,6 @@ app.post('/profilepic', uploader.single('file'), s3.upload, (req, res) => {
 
 // insert bio to db
 app.post('/profile', (req, res) => {
-    console.log('bio on server', req.body.bio, req.session.user.id);
     db.updateBio(req.body.bio, req.session.user.id)
         .catch(() => {
             res.status(500).json({
@@ -187,6 +187,23 @@ app.post('/profile', (req, res) => {
         });
 });
 
+
+app.get('/get-user/:userId', (req, res) => {
+    console.log('inside getUser on server');
+    console.log('params:', req.params.userId);
+
+    if (req.params.userId == req.session.user.id) {
+        return res.json({
+            ownProfile: true
+        });
+    }
+
+    db.getOtherProfileById(req.params.userId)
+        .then(response => {
+            console.log('response from getOtherProfileById:', response.rows[0]);
+            res.json(response.rows[0]);
+        });
+});
 
 
 // *************** DO NOT TOUCH ******************

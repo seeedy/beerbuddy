@@ -1,7 +1,4 @@
 * {
-    /* background-image: url('img/blue-sky-green-grass.jpg');
-    object-fit: scale-down;
-    object-position: center; */
     background: royalblue;
     font-family: "Helvetica";
 }
@@ -233,17 +230,27 @@ body {
     position: absolute;
     top: 200px;
     margin: 10px;
-    background: chocolate;
+    background: transparent;
     border: 2px solid gold;
     padding: 20px;
-    display: flex;
 }
 
-.bio-text {
+.user-bio {
     padding: 10px;
-    background: inherit;
+    display: flex;
+    flex-direction: row;
+}
+
+.user-bio-text {
+    padding: 0 10px;
+    vertical-align: top;
 }
 
 .bio-text h2 {
     background: inherit;
+    margin: 0;
+}
+
+.friend-btn {
+    align-self: flex-end;
 }

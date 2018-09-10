@@ -37,6 +37,7 @@ module.exports.updateImage = (image_url, user_id) => {
 };
 
 module.exports.updateBio = (bio, id) => {
+    console.log('updating bio for user', id, bio);
     return db.query(
         `
         UPDATE users
@@ -44,5 +45,16 @@ module.exports.updateBio = (bio, id) => {
         WHERE id = $2
         `,
         [bio, id]
+    );
+};
+
+module.exports.getOtherProfileById = (userId) => {
+    return db.query(
+        `
+        SELECT id, first, last, image_url, bio
+        FROM users
+        WHERE id = $1
+        `,
+        [userId]
     );
 };
