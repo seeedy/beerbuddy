@@ -212,7 +212,8 @@ body {
 
 
 .bio-text button,
-.uploader-label {
+.uploader-label,
+.friend-btn {
     position: relative;
     font-family: "Helvetica";
     text-transform: uppercase;

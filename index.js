@@ -189,8 +189,6 @@ app.post('/profile', (req, res) => {
 
 
 app.get('/get-user/:userId', (req, res) => {
-    console.log('inside getUser on server');
-    console.log('params:', req.params.userId);
 
     if (req.params.userId == req.session.user.id) {
         return res.json({
@@ -200,9 +198,95 @@ app.get('/get-user/:userId', (req, res) => {
 
     db.getOtherProfileById(req.params.userId)
         .then(response => {
-            console.log('response from getOtherProfileById:', response.rows[0]);
             res.json(response.rows[0]);
         });
+});
+
+
+app.get('/friends/:otherId', (req, res) => {
+
+    let userId = req.session.user.id;
+    let otherId = req.params.otherId;
+
+    console.log('inside app.get for users', userId, otherId);
+
+    db.getFriendshipStatus(userId, otherId)
+        .then(response => {
+            console.log(response.rows[0]);
+            res.json(response.rows[0]);
+        });
+});
+
+
+app.post('/friends/:otherId', (req, res) => {
+
+    let userId = req.session.user.id;
+    let otherId = req.params.otherId;
+
+    console.log('inside app.post for users', userId, otherId);
+
+    db.newFriendRequest(userId, otherId)
+        .then(() => {
+            res.json({
+                buttonText: 'Cancel friend request',
+                buttonStatus: 1,
+                buttonFunction: 'cancel'
+            });
+        });
+
+});
+
+
+app.post('/friends/cancel/:otherId', (req,res) => {
+
+    let userId = req.session.user.id;
+    let otherId = req.params.otherId;
+
+    console.log('inside app.cancel for users', userId, otherId);
+
+    db.cancelFriendRequest(userId, otherId)
+        .then(() => {
+            res.json({
+                buttonText: 'Send friend request',
+                buttonStatus: 0
+            });
+        });
+
+});
+
+app.post('/friends/accept/:otherId', (req, res) => {
+
+    let userId = req.session.user.id;
+    let otherId = req.params.otherId;
+
+    console.log('inside app.accept for users', userId, otherId);
+
+    db.acceptFriendRequest(userId, otherId)
+        .then(() => {
+            res.json({
+                buttonText: 'End friendship',
+                buttonStatus: 2,
+                buttonFunction: 'end'
+            });
+        });
+
+});
+
+app.post('/friends/end/:otherId', (req, res) => {
+
+    let userId = req.session.user.id;
+    let otherId = req.params.otherId;
+
+    console.log('inside app.end for users', userId, otherId);
+
+    db.cancelFriendRequest(userId, otherId)
+        .then(() => {
+            res.json({
+                buttonText: 'Send friend request',
+                buttonStatus: 0
+            });
+        });
+
 });
 
 

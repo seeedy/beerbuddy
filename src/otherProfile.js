@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from './axios';
-import { Link } from 'react-router-dom';
+import FriendButton from './friendButton';
+// import { Link } from 'react-router-dom';
 
 
 export default class OtherProfile extends React.Component {
@@ -62,23 +63,15 @@ export default class OtherProfile extends React.Component {
                 </div>
 
                 <div>
-                    <button className="friend-btn">buttonText</button>
+            
+                    <FriendButton
+                        otherId={ this.props.match.params.userId }/>
                 </div>
             </div>
         );
     }
 }
 
-//
-// let buttonText = 'Make Friend Request';
-// if (data) {
-//     if (data.status == 2) {
-//         buttonText = 'End Friendship';
-//     } else if (data.status == 1) {
-//         if (this.props.otherUserId == data.sender) {
-//             buttonText = 'Accept friendship';
-//         }
-//     }
-// }
+
 
 // new routes for making, accepting, rejecting, ending friend request

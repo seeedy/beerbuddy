@@ -58,3 +58,50 @@ module.exports.getOtherProfileById = (userId) => {
         [userId]
     );
 };
+
+module.exports.getFriendshipStatus = (sender, receiver) => {
+    return db.query(
+        `
+        SELECT receiver_id, sender_id, status
+        FROM friendships
+        WHERE (receiver_id = $1 AND sender_id = $2)
+        OR (receiver_id = $2 AND sender_id = $1)
+        `,
+        [sender, receiver]
+    );
+};
+
+module.exports.newFriendRequest = (sender, receiver) => {
+    return db.query(
+        `
+        INSERT INTO friendships (sender_id, receiver_id)
+        VALUES ($1, $2)
+        RETURNING sender_id, status
+        `,
+        [sender, receiver]
+    );
+};
+
+
+module.exports.cancelFriendRequest = (sender, receiver) => {
+    return db.query(
+        `
+        DELETE FROM friendships
+        WHERE (receiver_id = $1 AND sender_id = $2)
+        OR (receiver_id = $2 AND sender_id = $1)
+        `,
+        [sender, receiver]
+    );
+};
+
+module.exports.acceptFriendRequest = (sender, receiver) => {
+    return db.query(
+        `
+        UPDATE friendships
+        SET status = 2
+        WHERE (receiver_id = $1 AND sender_id = $2)
+        OR (receiver_id = $2 AND sender_id = $1)
+        `,
+        [sender, receiver]
+    );
+};
