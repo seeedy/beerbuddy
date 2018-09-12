@@ -219,26 +219,20 @@ app.get('/friends/:otherId', (req, res) => {
 
 
 app.post('/friends/:otherId', (req, res) => {
-
     let userId = req.session.user.id;
     let otherId = req.params.otherId;
 
     console.log('inside app.post for users', userId, otherId);
 
     db.newFriendRequest(userId, otherId)
-        .then(() => {
-            res.json({
-                buttonText: 'Cancel friend request',
-                buttonStatus: 1,
-                buttonFunction: 'cancel'
-            });
+        .then((response) => {
+            res.json(response.rows[0]);
         });
 
 });
 
 
 app.post('/friends/cancel/:otherId', (req,res) => {
-
     let userId = req.session.user.id;
     let otherId = req.params.otherId;
 
@@ -246,34 +240,26 @@ app.post('/friends/cancel/:otherId', (req,res) => {
 
     db.cancelFriendRequest(userId, otherId)
         .then(() => {
-            res.json({
-                buttonText: 'Send friend request',
-                buttonStatus: 0
-            });
+            res.json();
         });
 
 });
 
 app.post('/friends/accept/:otherId', (req, res) => {
-
     let userId = req.session.user.id;
     let otherId = req.params.otherId;
 
     console.log('inside app.accept for users', userId, otherId);
 
     db.acceptFriendRequest(userId, otherId)
-        .then(() => {
-            res.json({
-                buttonText: 'End friendship',
-                buttonStatus: 2,
-                buttonFunction: 'end'
-            });
+        .then((response) => {
+            console.log(response.rows[0]);
+            res.json(response.rows[0]);
         });
 
 });
 
 app.post('/friends/end/:otherId', (req, res) => {
-
     let userId = req.session.user.id;
     let otherId = req.params.otherId;
 
@@ -281,10 +267,7 @@ app.post('/friends/end/:otherId', (req, res) => {
 
     db.cancelFriendRequest(userId, otherId)
         .then(() => {
-            res.json({
-                buttonText: 'Send friend request',
-                buttonStatus: 0
-            });
+            res.json();
         });
 
 });
