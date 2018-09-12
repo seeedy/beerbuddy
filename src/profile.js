@@ -9,14 +9,12 @@ export default function Profile(props) {
 
             <div className="user-bio">
 
-            
+
                 <img
                     src={ props.imageUrl }
                     className="profile-pic"
                     onClick={ props.clickHandler }
                 />
-
-
 
                 <div className="user-bio-text">
 

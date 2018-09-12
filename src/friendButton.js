@@ -59,8 +59,6 @@ export default class FriendButton extends React.Component {
 
     clickHandler() {
 
-        console.log('clickhandler');
-
         if (this.state.buttonStatus == 0) {
             axios.post(`/friends/${ this.props.otherId }`)
                 .then(response => {

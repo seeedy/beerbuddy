@@ -1,14 +1,14 @@
 * {
-    background: royalblue;
     font-family: "Helvetica";
 }
 
 body {
     overflow-x: hidden;
-
+    margin: 0;
 }
 
 .wrapper {
+    background: royalblue;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -152,9 +152,21 @@ body {
     z-index: 1;
 }
 
+
+/**************** main  ************/
+
+
+
 .header {
-    border-bottom: 2px solid gold;
+    position: relative;
+    top: 0;
+    border-bottom: 1px solid royalblue;
+    box-shadow: 1px 1px 5px royalblue;
     height: 143px;
+    background: ghostwhite;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .current-user {
@@ -164,10 +176,13 @@ body {
 }
 
 .profile-pic {
-    height: 120px;
-    width: 120px;
+    height: 110px;
+    width: 110px;
     object-fit: cover;
+    object-position: center;
     cursor: pointer;
+    border-radius: 50%;
+
 }
 
 .uploader {
@@ -231,8 +246,8 @@ body {
     position: absolute;
     top: 200px;
     margin: 10px;
-    background: transparent;
-    border: 2px solid gold;
+    background: ghostwhite;
+    border: 1px solid royalblue;
     padding: 20px;
 }
 
