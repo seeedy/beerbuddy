@@ -15,42 +15,43 @@ export default class FriendButton extends React.Component {
         this.clickHandler = this.clickHandler.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         // on rendering user profile -> set button text
-        axios.get(`/friends/${ this.props.otherId }`).then(response => {
-            console.log('Mounting data: ', response.data, this.state);
-            if (response.data) {
+        const response = await
+        axios.get(`/friends/${ this.props.otherId }`);
+        
+        console.log('Mounting data: ', response);
+        if (response.data) {
 
-                if (response.data.status == 1) {
-                    if (response.data.sender_id != this.props.otherId) {
-                        this.setState({
-                            buttonText: 'Cancel friend request',
-                            buttonStatus: 1,
-                            buttonFunction: 'cancel'
-                        });
-                    } else if (response.data.sender_id ==           this.props.otherId) {
-                        this.setState({
-                            buttonText: 'Accept friend request',
-                            buttonStatus: 1,
-                            buttonFunction: 'accept'
-                        });
-                    }
-                } else if (response.data.status == 2) {
+            if (response.data.status == 1) {
+                if (response.data.sender_id != this.props.otherId) {
                     this.setState({
-                        buttonText: 'End friendship',
-                        buttonStatus: 2,
-                        buttonFunction: 'end'
+                        buttonText: 'Cancel friend request',
+                        buttonStatus: 1,
+                        buttonFunction: 'cancel'
+                    });
+                } else if (response.data.sender_id ==           this.props.otherId) {
+                    this.setState({
+                        buttonText: 'Accept friend request',
+                        buttonStatus: 1,
+                        buttonFunction: 'accept'
                     });
                 }
-
-            } else {
-                console.log('no response.data');
+            } else if (response.data.status == 2) {
                 this.setState({
-                    buttonText: 'Send friend request',
-                    buttonStatus: 0
+                    buttonText: 'End friendship',
+                    buttonStatus: 2,
+                    buttonFunction: 'end'
                 });
             }
-        });
+
+        } else {
+            console.log('no response.data');
+            this.setState({
+                buttonText: 'Send friend request',
+                buttonStatus: 0
+            });
+        }
     }
 
 
