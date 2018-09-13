@@ -106,3 +106,18 @@ module.exports.acceptFriendRequest = (sender, receiver) => {
         [sender, receiver]
     );
 };
+
+module.exports.getFriendsWannabes = (userId) => {
+    console.log('inside getFriendsWannabes');
+    return db.query(
+        `
+        SELECT users.id, first, last, image_url, status
+        FROM friendships
+        JOIN users
+        ON (status = 1 AND receiver_id = $1 AND sender_id = users.id)
+        OR (status = 2 AND receiver_id = $1 AND sender_id = users.id)
+        OR (status = 2 AND sender_id = $1 AND receiver_id = users.id)
+        `,
+        [userId]
+    );
+};

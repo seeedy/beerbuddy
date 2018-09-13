@@ -11,6 +11,8 @@ const uidSafe = require('uid-safe');
 const path = require('path');
 const s3 = require('./s3');
 const config = require('./config.json');
+const server = require('http').Server(app);
+const io = require('socket.io')(server, { origins: 'localhost:8080' });
 
 
 const diskStorage = multer.diskStorage({
@@ -148,6 +150,11 @@ app.post('/login', (req, res) => {
         );
 });
 
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/");
+});
+
 
 app.get('/user', (req, res) => {
     res.json(req.session.user);
@@ -273,11 +280,39 @@ app.post('/friends/end/:otherId', (req, res) => {
 });
 
 
+app.get('/myfriends', (req, res) => {
+
+    db.getFriendsWannabes(req.session.user.id)
+        .then(response => {
+            console.log(response.rows);
+            res.json(response.rows);
+        });
+});
+
+
 // *************** DO NOT TOUCH ******************
 app.get('*', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.listen(8080, function() {
+server.listen(8080, function() {
     console.log("I'm listening.");
 });
+
+// io.on('connection', socket => {
+//     console.log(`${socket.id}) is now connected`);
+//
+//     socket.on('disconnect', () => {
+//         console.log(`${socket.id}) is now disconnected`);
+//     });
+//
+//
+//     socket.emit('hello', {
+//         msg: 'sup?'
+//     });
+//
+//     // send msg to all but new connection
+//     socket.broadcoast.emit('newArrival', 'sb new');
+//
+//     socket.on('yeah', data => console.log(data));
+// });

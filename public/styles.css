@@ -270,3 +270,19 @@ body {
 .friend-btn {
     align-self: flex-end;
 }
+
+.friend-profile {
+    position: relative;
+    margin: 10px;
+    background: ghostwhite;
+    border: 1px solid royalblue;
+    padding: 20px;
+    max-width: 25%;
+    min-width: 20%;
+}
+
+.all-friends,
+.all-wannabes {
+    display: flex;
+    flex-wrap: wrap;
+}

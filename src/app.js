@@ -6,6 +6,7 @@ import Uploader from './uploader';
 import Profile from './profile';
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from './otherProfile';
+import Friends from './friends';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -33,7 +34,6 @@ export default class App extends React.Component {
     componentDidMount() {
         axios.get('/user').then(
             ({ data }) => {
-                console.log('data:', data);
                 if (!data.imageUrl) {
                     data.imageUrl = "img/default-user.png";
                 }
@@ -95,6 +95,11 @@ export default class App extends React.Component {
             <div className="main">
                 <div className="header">
                     <Logo />
+
+                    <a href="/friends">Friends</a>
+
+                    <a href="/logout">Logout</a>
+
                     <ProfilePic
                         imageUrl={ this.state.imageUrl }
                         first={ this.state.first }
@@ -122,6 +127,10 @@ export default class App extends React.Component {
                         <Route
                             exact path="/user/:userId"
                             component={ OtherProfile }
+                        />
+                        <Route
+                            exact path="/friends"
+                            component={ Friends }
                         />
                     </div>
                 </BrowserRouter>
