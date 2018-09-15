@@ -27,6 +27,15 @@ export default function (state = {}, action) {
         };
     }
 
-    console.log('state', state);
+    // ********************** SOCKETS *****************************
+    if (action.type == "RECEIVE_ONLINE_USERS") {
+        console.log('running reducers', action);
+
+        state = { 
+            ...state,
+            onlineUsers: action.onlineUsers
+        };
+    }
+
     return state;
 }

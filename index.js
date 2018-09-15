@@ -36,15 +36,19 @@ const uploader = multer({
 
 app.use(express.static('./public'));
 app.use(compression());
-app.use(
-    require('body-parser').json());
-app.use(require('cookie-parser')());
-app.use(
-    cookieSession({
-        secret: secrets.secret,
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+app.use(require('body-parser').json());
+
+const cookieSessionMiddleware = cookieSession({
+    secret: secrets.secret,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
+
 app.use(csurf());
 
 
@@ -290,6 +294,8 @@ app.get('/myfriends', (req, res) => {
 });
 
 
+
+
 // *************** DO NOT TOUCH ******************
 app.get('*', function(req, res) {
     res.sendFile(__dirname + '/index.html');
@@ -299,17 +305,47 @@ server.listen(8080, function() {
     console.log("I'm listening.");
 });
 
-// io.on('connection', socket => {
-//     console.log(`${socket.id}) is now connected`);
-//
-//     socket.on('disconnect', () => {
-//         console.log(`${socket.id}) is now disconnected`);
-//     });
-//
-//
-//     socket.emit('hello', {
-//         msg: 'sup?'
-//     });
+// *************************** SOCKET STUFF ***********************
+let onlineUsers = {};
+
+// inside this block sessions is accessed by socket.request.session
+io.on('connection', socket => {
+
+    console.log(`${socket.id} has connected`);
+    if (!socket.request.session || !socket.request.session.user) {
+        return socket.disconnect(true);
+    }
+
+    // store socketId and userId in variables
+    const socketId = socket.id;
+    const userId = socket.request.session.user.id;
+
+    socket.broadcast.emit('userJoined', userId);
+
+
+    // add to onlineUsers object
+    onlineUsers[socketId] = userId;
+    console.log('onlineUsers: ', onlineUsers);
+    let onlineUserIds = Object.values(onlineUsers);
+
+    db.getOnlineUsersByIds(onlineUserIds).then(response => {
+        console.log('response from db', response.rows);
+        // emit sends data to user who logs in
+        socket.emit('onlineUsers', response.rows);
+    });
+
+
+
+
+    socket.on('userLeft', () => {
+        console.log(`${socket.id} has left`);
+        io.sockets.emit('userLeft', userId);
+    });
+
+});
+
+
+
 //
 //     // send msg to all but new connection
 //     socket.broadcoast.emit('newArrival', 'sb new');

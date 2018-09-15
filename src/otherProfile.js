@@ -16,10 +16,7 @@ export default class OtherProfile extends React.Component {
             bio: ''
         };
     }
-    // async componentDidMount() {
-    //     const resp = await axios.get(`/get-user/${this.props.match.params.userId}`);
-    //     console.log('resp from axios', resp);
-    // }
+
 
     componentDidMount() {
         axios.get(`/get-user/${this.props.match.params.userId}`)
@@ -32,7 +29,7 @@ export default class OtherProfile extends React.Component {
 
                 let otherUser = response.data;
                 if (!otherUser.image_url) {
-                    otherUser.image_url = "/img/default-user.png";
+                    otherUser.image_url = "img/default-user.png";
                 }
 
                 this.setState({
@@ -63,7 +60,7 @@ export default class OtherProfile extends React.Component {
                 </div>
 
                 <div>
-            
+
                     <FriendButton
                         otherId={ this.props.match.params.userId }/>
                 </div>

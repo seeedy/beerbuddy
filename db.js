@@ -121,3 +121,9 @@ module.exports.getFriendsWannabes = (userId) => {
         [userId]
     );
 };
+
+
+module.exports.getOnlineUsersByIds = arrayOfIds => {
+    const query = `SELECT * FROM users WHERE id = ANY($1)`;
+    return db.query(query, [arrayOfIds]);
+};

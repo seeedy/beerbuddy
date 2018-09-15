@@ -28,7 +28,10 @@ export default function Profile(props) {
                     ) : (
                         <div>
                             <p>{ props.bio }</p>
-                            <button onClick={ props.toggleBio }>Edit profile info</button>
+                            <div className="user-bio-edit">
+                                <i className="fas fa-user-edit" onClick={ props.toggleBio }></i>
+                                <span className="tooltip">Edit bio</span>
+                            </div>
                         </div>
                     )}
                 </div>

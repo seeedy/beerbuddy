@@ -24,3 +24,12 @@ export async function unfriend(friendId) {
         delete: friendId
     };
 }
+
+
+// socket stuff
+export async function getOnlineUsers(dataDB) {
+    return {
+        type: 'RECEIVE_ONLINE_USERS',
+        onlineUsers: dataDB
+    };
+}

@@ -7,8 +7,9 @@ import reduxPromise from 'redux-promise';
 import reducer from './reducers';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-// import * as io from 'socket-io';
 
+// socket.io stuff
+import { getSocket } from './socket';
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(reduxPromise)));
 
@@ -17,10 +18,12 @@ let elem;
 if (location.pathname == '/welcome') {
     elem = <Welcome />;
 } else {
-    elem =
-    <Provider store={store}>
-        <App />
-    </Provider>;
+    elem = (
+        getSocket(store), // !!! comma here is needed !!!
+        <Provider store={store}>
+            <App />
+        </Provider>
+    );
 }
 
 

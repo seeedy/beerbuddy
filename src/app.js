@@ -7,6 +7,7 @@ import Profile from './profile';
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from './otherProfile';
 import Friends from './friends';
+import OnlineUsers from './onlineUsers';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -21,8 +22,6 @@ export default class App extends React.Component {
             showBio: false
         };
 
-
-
         /// !!!!!!!! ALWAYS BIND THE METHODS TO THIS !!!!!!!
         this.showUploader = this.showUploader.bind(this);
         this.updateImage = this.updateImage.bind(this);
@@ -35,7 +34,7 @@ export default class App extends React.Component {
         axios.get('/user').then(
             ({ data }) => {
                 if (!data.imageUrl) {
-                    data.imageUrl = "img/default-user.png";
+                    data.imageUrl = "/img/default-user.png";
                 }
                 this.setState(data);
             }
@@ -92,11 +91,17 @@ export default class App extends React.Component {
             );
         }
         return (
-            <div className="main">
+            <div id="page-outer">
                 <div className="header">
                     <Logo />
 
-                    <a href="/friends">Friends</a>
+                    <a href="/online">
+                        <i className="fas fa-globe"></i>
+                    Online Users</a>
+
+                    <a href="/friends">
+                        <i className="fas fa-user-friends"></i>
+                    Friends</a>
 
                     <a href="/logout">Logout</a>
 
@@ -112,7 +117,7 @@ export default class App extends React.Component {
                         clickHandler={ this.closeUploader } />}
 
                 <BrowserRouter>
-                    <div>
+                    <div className="app-content">
                         <Route exact path="/" render={() => (
                             <Profile
                                 first={ this.state.first }
@@ -131,6 +136,10 @@ export default class App extends React.Component {
                         <Route
                             exact path="/friends"
                             component={ Friends }
+                        />
+                        <Route
+                            exact path="/online"
+                            component={ OnlineUsers }
                         />
                     </div>
                 </BrowserRouter>

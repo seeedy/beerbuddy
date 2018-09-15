@@ -38,13 +38,13 @@ class Friends extends React.Component {
                                 <div className="user-bio-text">
                                     <h3>{friend.first} {friend.last}</h3>
 
-                                    <button className="friend-btn" onClick={
+                                    <button className="app-btn-on" onClick={
                                         () => {
                                             this.props
                                                 .dispatch
                                                 (unfriend(friend.id));
                                         }
-                                    }>End Friendship</button>
+                                    }>Unfriend</button>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@ class Friends extends React.Component {
 
                                 <div className="user-bio-text">
                                     <h3>{wannabe.first} {wannabe.last}</h3>
-                                    <button className="friend-btn" onClick={
+                                    <button className="app-btn" onClick={
                                         () => {
                                             console.log('wannabe.id', wannabe.id);
                                             this.props
