@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getFriendsWannabes, acceptFriendRequest, unfriend } from './actions';
 
@@ -31,7 +31,7 @@ class Friends extends React.Component {
                     friends.map(friend => (
                         <div className="friend-profile" key={friend.id}>
                             <div className="user-bio" >
-                                {!!friend.image_url && <img src={friend.image_url} className="profile-pic"/>}
+                                {!!friend.image_url && <img src={friend.image_url} className="avatar"/>}
                                 {!friend.image_url && <img src="/img/default-user.png"
                                     className="profile-pic"/>}
 
@@ -59,7 +59,7 @@ class Friends extends React.Component {
                         <div className="friend-profile" key={wannabe.id}>
 
                             <div className="user-bio">
-                                {!!wannabe.image_url && <img src={wannabe.image_url} className="profile-pic"/>}
+                                {!!wannabe.image_url && <img src={wannabe.image_url} className="avatar"/>}
                                 {!wannabe.image_url && <img src="/img/default-user.png"
                                     className="profile-pic"/>}
 

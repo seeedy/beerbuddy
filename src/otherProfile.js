@@ -50,7 +50,7 @@ export default class OtherProfile extends React.Component {
                 <div className="user-bio">
                     <img
                         src={ this.state.imageUrl }
-                        className="profile-pic"
+                        className="avatar"
                     />
 
                     <div className="user-bio-text">

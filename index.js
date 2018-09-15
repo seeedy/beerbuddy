@@ -190,6 +190,7 @@ app.post('/profilepic', uploader.single('file'), s3.upload, (req, res) => {
 
 // insert bio to db
 app.post('/profile', (req, res) => {
+    console.log('updating profile:', req.body.bio, req.session.user.id );
     db.updateBio(req.body.bio, req.session.user.id)
         .catch(() => {
             res.status(500).json({

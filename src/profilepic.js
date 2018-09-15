@@ -3,9 +3,9 @@ import React from 'react';
 export default function ProfilePic(props) {
 
     return (
-        <div className="current-user">
+        <div className="user-avatar-div">
             <img src={ props.imageUrl }
-                className="profile-pic"
+                className="avatar"
                 onClick={ props.clickHandler }
             />
         </div>

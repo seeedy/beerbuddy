@@ -116,33 +116,37 @@ export default class App extends React.Component {
                         updateImage={ this.updateImage }
                         clickHandler={ this.closeUploader } />}
 
-                <BrowserRouter>
-                    <div className="app-content">
-                        <Route exact path="/" render={() => (
-                            <Profile
-                                first={ this.state.first }
-                                last={ this.state.last }
-                                imageUrl={ this.state.imageUrl }
-                                bio={ this.state.bio }
-                                showBio={ this.state.showBio }
-                                toggleBio={ this.toggleBio }
-                                setBio={ this.setBio }
-                            /> )}
+                <div className="app-content">
+
+                    <div className="left-dashboard">
+                        <Profile
+                            first={ this.state.first }
+                            last={ this.state.last }
+                            imageUrl={ this.state.imageUrl }
+                            bio={ this.state.bio }
+                            showBio={ this.state.showBio }
+                            toggleBio={ this.toggleBio }
+                            setBio={ this.setBio }
                         />
-                        <Route
-                            exact path="/user/:userId"
-                            component={ OtherProfile }
-                        />
-                        <Route
-                            exact path="/friends"
-                            component={ Friends }
-                        />
-                        <Route
-                            exact path="/online"
-                            component={ OnlineUsers }
-                        />
-                    </div>
-                </BrowserRouter>
+                    </div>    
+                    <BrowserRouter>
+                        <div className="router-content">
+
+                            <Route
+                                exact path="/user/:userId"
+                                component={ OtherProfile }
+                            />
+                            <Route
+                                exact path="/friends"
+                                component={ Friends }
+                            />
+                            <Route
+                                exact path="/online"
+                                component={ OnlineUsers }
+                            />
+                        </div>
+                    </BrowserRouter>
+                </div>
             </div>
         );
     }

@@ -12,7 +12,7 @@ export default function Profile(props) {
 
                 <img
                     src={ props.imageUrl }
-                    className="profile-pic"
+                    className="avatar"
                     onClick={ props.clickHandler }
                 />
 

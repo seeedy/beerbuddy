@@ -25,9 +25,9 @@ class OnlineUsers extends React.Component {
                         // if we use curly braces instead of parentheses here, we need to return!!
                         <div className="friend-profile" key={user.id}>
                             <div className="user-bio" >
-                                {!!user.image_url && <img src={user.image_url} className="profile-pic"/>}
+                                {!!user.image_url && <img src={user.image_url} className="avatar"/>}
                                 {!user.image_url && <img src="/img/default-user.png"
-                                    className="profile-pic"/>}
+                                    className="avatar"/>}
 
                                 <div className="user-bio-text">
                                     <h3>{user.first} {user.last}</h3>

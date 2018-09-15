@@ -26,16 +26,6 @@ if (location.pathname == '/welcome') {
     );
 }
 
-
-
-// for logged in users
-// const socket = io.connect();
-//
-// socket.on('hello', data => {
-//     console.log(data.msg);
-//     socket.emit('hell yea');
-// });
-
 ReactDOM.render(
     elem,
     document.querySelector('main')

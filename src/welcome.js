@@ -8,9 +8,7 @@ export default function Welcome() {
     let logoStyle = {
         color: "gold",
         fontSize: "80px",
-        fontFamily: "Helvetica",
-        border: "15px solid gold",
-        padding: "10px",
+        padding: "20px",
         margin: "20px auto",
         fontWeight: 800,
         textAlign: "center",
@@ -19,7 +17,11 @@ export default function Welcome() {
 
         <div className="wrapper">
             <h1>Welcome to</h1>
-            <h1 style={logoStyle}>BEER LOVERS</h1>
+            <h1 style={logoStyle}>
+                <i className="far fa-heart"></i>
+                <i className="fas fa-beer"></i>
+            BeerBuddy
+            </h1>
             <HashRouter>
                 <div className="routerbox">
                     <Route exact path="/" component={Registration} />
