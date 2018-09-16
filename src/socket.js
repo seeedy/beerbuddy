@@ -9,18 +9,18 @@ export function getSocket(store) {
         socket = io.connect();
 
         socket.on('onlineUsers', data => {
-            // dispatch an action for the onlineUsers data
             store.dispatch(getOnlineUsers(data));
 
         });
 
-        // socket.on('userJoined', data => {
-        //     store.dispatch(userJoined(data));
-        // });
-        //
-        // socket.on('userLeft', data => {
-        //     store.dispatch(userLeft(data));
-        // });
+        socket.on('userJoined', data => {
+            console.log('data from userJoined', data);
+            store.dispatch(userJoined(data));
+        });
+
+        socket.on('userLeft', data => {
+            store.dispatch(userLeft(data));
+        });
     }
 
     return socket;

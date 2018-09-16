@@ -26,10 +26,24 @@ export async function unfriend(friendId) {
 }
 
 
-// socket stuff
-export async function getOnlineUsers(dataDB) {
+/////////////////// socket stuff //////////////////////
+export function getOnlineUsers(dataDB) {
     return {
         type: 'RECEIVE_ONLINE_USERS',
         onlineUsers: dataDB
+    };
+}
+
+export function userLeft(data) {
+    return {
+        type: 'USER_LEFT',
+        disconnectedUser: data
+    };
+}
+
+export function userJoined(data) {
+    return {
+        type: 'NEW_USER_JOINED',
+        newUser: data
     };
 }

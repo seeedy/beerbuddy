@@ -315,8 +315,8 @@ let onlineUsers = {};
 
 // inside this block sessions is accessed by socket.request.session
 io.on('connection', socket => {
+    console.log(`${socket.id} has connected`);
 
-    // console.log(`${socket.id} has connected`);
     if (!socket.request.session || !socket.request.session.user) {
         return socket.disconnect(true);
     }
@@ -325,35 +325,24 @@ io.on('connection', socket => {
     const socketId = socket.id;
     const userId = socket.request.session.user.id;
 
-    socket.broadcast.emit('userJoined', userId);
-
-
     // add to onlineUsers object
     onlineUsers[socketId] = userId;
-    // console.log('onlineUsers: ', onlineUsers);
-    let onlineUserIds = Object.values(onlineUsers);
 
-    db.getOnlineUsersByIds(onlineUserIds).then(response => {
-        // console.log('response from db', response.rows);
-        // emit sends data to user who logs in
+    // get ids of online users to send to db and get user info
+    let arrayOfIds = Object.values(onlineUsers);
+
+    db.getOnlineUsersByIds(arrayOfIds).then(response => {
         socket.emit('onlineUsers', response.rows);
+        socket.broadcast.emit('userJoined', response.rows.find(user => user.id == userId));
     });
 
-
-
-
-    socket.on('userLeft', () => {
-        // console.log(`${socket.id} has left`);
-        io.sockets.emit('userLeft', userId);
+    socket.on('disconnect', () => {
+        delete onlineUsers[socketId];
+        let check = Object.values(onlineUsers).find(id => id == userId);
+        if (!check) {
+            socket.broadcast.emit('userLeft', userId);
+        }
     });
+
 
 });
-
-
-
-//
-//     // send msg to all but new connection
-//     socket.broadcoast.emit('newArrival', 'sb new');
-//
-//     socket.on('yeah', data => console.log(data));
-// });

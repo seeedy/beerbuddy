@@ -28,12 +28,49 @@ export default function (state = {}, action) {
     }
 
     // ********************** SOCKETS *****************************
-    if (action.type == "RECEIVE_ONLINE_USERS") {
+    if (action.type == 'RECEIVE_ONLINE_USERS') {
         console.log('running reducers', action);
 
-        state = { 
+        state = {
             ...state,
             onlineUsers: action.onlineUsers
+        };
+    }
+
+
+    if (action.type == 'NEW_USER_JOINED') {
+        console.log('running reducers', action);
+
+        let uniqueNewUser = true;
+        state.onlineUsers.forEach(user => {
+            if (user.id == action.newUser.id) {
+                uniqueNewUser = false;
+            }
+        });
+
+        if (!uniqueNewUser) {
+            return state;
+        }
+
+        const onlineUsersUpdated = [ ...state.onlineUsers, action.newUser];
+
+        state = {
+            ...state,
+            onlineUsers: onlineUsersUpdated
+        };
+
+    }
+
+    if (action.type == 'USER_LEFT') {
+        console.log('running reducers', action);
+
+        const onlineUsersUpdated = state.onlineUsers.filter(user => {
+            return user.id != action.disconnectedUser;
+        });
+
+        state = {
+            ...state,
+            onlineUsers: onlineUsersUpdated
         };
     }
 
