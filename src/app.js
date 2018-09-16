@@ -37,6 +37,7 @@ export default class App extends React.Component {
                     data.imageUrl = "/img/default-user.png";
                 }
                 this.setState(data);
+
             }
         );
     }
@@ -128,7 +129,7 @@ export default class App extends React.Component {
                             toggleBio={ this.toggleBio }
                             setBio={ this.setBio }
                         />
-                    </div>    
+                    </div>
                     <BrowserRouter>
                         <div className="router-content">
 

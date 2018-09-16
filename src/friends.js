@@ -33,19 +33,21 @@ class Friends extends React.Component {
                             <div className="user-bio" >
                                 {!!friend.image_url && <img src={friend.image_url} className="avatar"/>}
                                 {!friend.image_url && <img src="/img/default-user.png"
-                                    className="profile-pic"/>}
+                                    className="avatar"/>}
 
-                                <div className="user-bio-text">
+                                <div className="user-name">
                                     <h3>{friend.first} {friend.last}</h3>
-
-                                    <button className="app-btn-on" onClick={
-                                        () => {
-                                            this.props
-                                                .dispatch
-                                                (unfriend(friend.id));
-                                        }
-                                    }>Unfriend</button>
                                 </div>
+
+                            </div>
+                            <div>
+                                <button className="app-btn-on" onClick={
+                                    () => {
+                                        this.props
+                                            .dispatch
+                                            (unfriend(friend.id));
+                                    }
+                                }>Unfriend</button>
                             </div>
                         </div>
                     ))}
@@ -61,20 +63,22 @@ class Friends extends React.Component {
                             <div className="user-bio">
                                 {!!wannabe.image_url && <img src={wannabe.image_url} className="avatar"/>}
                                 {!wannabe.image_url && <img src="/img/default-user.png"
-                                    className="profile-pic"/>}
+                                    className="avatar"/>}
 
-                                <div className="user-bio-text">
+                                <div className="user-name">
                                     <h3>{wannabe.first} {wannabe.last}</h3>
-                                    <button className="app-btn" onClick={
-                                        () => {
-                                            console.log('wannabe.id', wannabe.id);
-                                            this.props
-                                                .dispatch
-                                                (acceptFriendRequest(
-                                                    wannabe.id));
-                                        }
-                                    }>Add friend</button>
                                 </div>
+                            </div>
+                            <div>
+                                <button className="app-btn" onClick={
+                                    () => {
+                                        console.log('wannabe.id', wannabe.id);
+                                        this.props
+                                            .dispatch
+                                            (acceptFriendRequest(
+                                                wannabe.id));
+                                    }
+                                }>Add friend</button>
                             </div>
                         </div>
                     ))}

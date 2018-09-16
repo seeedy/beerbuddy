@@ -190,8 +190,14 @@ app.post('/profilepic', uploader.single('file'), s3.upload, (req, res) => {
 
 // insert bio to db
 app.post('/profile', (req, res) => {
-    console.log('updating profile:', req.body.bio, req.session.user.id );
     db.updateBio(req.body.bio, req.session.user.id)
+        .then(() => {
+            req.session.user.bio = req.body.bio;
+            // we always need to send response when we update cookie!
+            res.json({
+                success: true
+            });
+        })
         .catch(() => {
             res.status(500).json({
                 success: false
@@ -286,10 +292,8 @@ app.post('/friends/end/:otherId', (req, res) => {
 
 
 app.get('/myfriends', (req, res) => {
-
     db.getFriendsWannabes(req.session.user.id)
         .then(response => {
-            console.log(response.rows);
             res.json(response.rows);
         });
 });
@@ -312,7 +316,7 @@ let onlineUsers = {};
 // inside this block sessions is accessed by socket.request.session
 io.on('connection', socket => {
 
-    console.log(`${socket.id} has connected`);
+    // console.log(`${socket.id} has connected`);
     if (!socket.request.session || !socket.request.session.user) {
         return socket.disconnect(true);
     }
@@ -326,11 +330,11 @@ io.on('connection', socket => {
 
     // add to onlineUsers object
     onlineUsers[socketId] = userId;
-    console.log('onlineUsers: ', onlineUsers);
+    // console.log('onlineUsers: ', onlineUsers);
     let onlineUserIds = Object.values(onlineUsers);
 
     db.getOnlineUsersByIds(onlineUserIds).then(response => {
-        console.log('response from db', response.rows);
+        // console.log('response from db', response.rows);
         // emit sends data to user who logs in
         socket.emit('onlineUsers', response.rows);
     });
@@ -339,7 +343,7 @@ io.on('connection', socket => {
 
 
     socket.on('userLeft', () => {
-        console.log(`${socket.id} has left`);
+        // console.log(`${socket.id} has left`);
         io.sockets.emit('userLeft', userId);
     });
 

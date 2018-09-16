@@ -23,7 +23,7 @@ class OnlineUsers extends React.Component {
                 <div className="online-users">
                     {onlineUsers.map(user => (
                         // if we use curly braces instead of parentheses here, we need to return!!
-                        <div className="friend-profile" key={user.id}>
+                        <div className="other-profile" key={user.id}>
                             <div className="user-bio" >
                                 {!!user.image_url && <img src={user.image_url} className="avatar"/>}
                                 {!user.image_url && <img src="/img/default-user.png"

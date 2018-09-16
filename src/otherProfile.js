@@ -45,7 +45,7 @@ export default class OtherProfile extends React.Component {
 
     render() {
         return (
-            <div className="profile">
+            <div className="other-profile">
 
                 <div className="user-bio">
                     <img
