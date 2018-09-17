@@ -8,6 +8,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from './otherProfile';
 import Friends from './friends';
 import OnlineUsers from './onlineUsers';
+import Chat from './chat';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -96,6 +97,10 @@ export default class App extends React.Component {
                 <div className="header">
                     <Logo />
 
+                    <a href="/chat">
+                        <i className="fas fa-globe"></i>
+                    Chat</a>
+
                     <a href="/online">
                         <i className="fas fa-globe"></i>
                     Online Users</a>
@@ -144,6 +149,10 @@ export default class App extends React.Component {
                             <Route
                                 exact path="/online"
                                 component={ OnlineUsers }
+                            />
+                            <Route
+                                exact path="/chat"
+                                component={ Chat }
                             />
                         </div>
                     </BrowserRouter>

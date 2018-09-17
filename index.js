@@ -344,5 +344,27 @@ io.on('connection', socket => {
         }
     });
 
+    db.getChatMessages().then(response => {
+        console.log('chat msgs:', response.rows);
+        socket.emit('chatMessages', response.rows);
+    });
+
+    socket.on('sendMessage', msg => {
+        db.newChatMessage(userId, msg).then(() => {
+            // if we do multiple async things in a row, WE NEED TO RETURN
+            // THE SEQUENTIAL STUFF !!!!!!!!!!!!!!!
+            return db.getChatMessages();
+        }).then(response => {
+            console.log('getting the last comment', response.rows.pop());
+        });
+
+        // io.sockets.emit('newChatMessage', {
+        //     message: msg,
+        //     id: userId
+        //     ts: new Date().toLocalDateString()
+        // })
+    });
+
+
 
 });

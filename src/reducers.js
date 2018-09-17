@@ -27,7 +27,7 @@ export default function (state = {}, action) {
         };
     }
 
-    // ********************** SOCKETS *****************************
+    // ********************** online users *****************************
     if (action.type == 'RECEIVE_ONLINE_USERS') {
         console.log('running reducers', action);
 
@@ -58,7 +58,6 @@ export default function (state = {}, action) {
             ...state,
             onlineUsers: onlineUsersUpdated
         };
-
     }
 
     if (action.type == 'USER_LEFT') {
@@ -74,5 +73,15 @@ export default function (state = {}, action) {
         };
     }
 
+    // ********************** chat **************************
+
+    if (action.type == 'GET_CHAT_MESSAGES') {
+        console.log('running reducers', action);
+
+        state = {
+            ...state,
+            msgs: action.msgs
+        };
+    }
     return state;
 }

@@ -37,7 +37,6 @@ module.exports.updateImage = (image_url, user_id) => {
 };
 
 module.exports.updateBio = (bio, id) => {
-    console.log('updating bio for user', id, bio);
     return db.query(
         `
         UPDATE users
@@ -108,7 +107,6 @@ module.exports.acceptFriendRequest = (sender, receiver) => {
 };
 
 module.exports.getFriendsWannabes = (userId) => {
-    console.log('inside getFriendsWannabes');
     return db.query(
         `
         SELECT users.id, first, last, image_url, status
@@ -126,4 +124,33 @@ module.exports.getFriendsWannabes = (userId) => {
 module.exports.getOnlineUsersByIds = arrayOfIds => {
     const query = `SELECT * FROM users WHERE id = ANY($1)`;
     return db.query(query, [arrayOfIds]);
+};
+
+module.exports.getChatMessages = () => {
+    return db.query(
+        `
+        SELECT
+        messages.id as msg_id,
+        messages.message as msg_text,
+        messages.sender_id as msg_sender_id,
+        messages.created_at as msg_time,
+        users.first as msg_sender_first,
+        users.last as msg_sender_last,
+        users.image_url as msg_sender_img
+        FROM messages
+        JOIN users
+        ON messages.sender_id = users.id
+        ORDER BY messages.id ASC LIMIT 10
+        `
+    );
+};
+
+module.exports.newChatMessage = (userId, msg) => {
+    return db.query(
+        `
+        INSERT INTO messages (sender_id, message)
+        VALUES ($1, $2)
+        `,
+        [userId, msg]
+    );
 };

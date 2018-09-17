@@ -1,12 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { getOnlineUsers } from './actions';
 
 class OnlineUsers extends React.Component {
-
-    componentDidMount() {
-
-    }
 
     render() {
 

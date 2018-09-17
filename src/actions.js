@@ -26,11 +26,11 @@ export async function unfriend(friendId) {
 }
 
 
-/////////////////// socket stuff //////////////////////
-export function getOnlineUsers(dataDB) {
+/////////////////// online users stuff //////////////////////
+export function getOnlineUsers(data) {
     return {
         type: 'RECEIVE_ONLINE_USERS',
-        onlineUsers: dataDB
+        onlineUsers: data
     };
 }
 
@@ -45,5 +45,21 @@ export function userJoined(data) {
     return {
         type: 'NEW_USER_JOINED',
         newUser: data
+    };
+}
+
+
+/////////////////////////// chat stuff ///////////////////////////
+export function getChatMessages(data) {
+    return {
+        type: 'GET_CHAT_MESSAGES',
+        msgs: data
+    };
+}
+
+export function newChatMessage(data) {
+    return {
+        type: 'NEW_CHAT_MESSAGE',
+        msg: data
     };
 }
