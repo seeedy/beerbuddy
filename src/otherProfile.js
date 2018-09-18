@@ -28,9 +28,7 @@ export default class OtherProfile extends React.Component {
                 }
 
                 let otherUser = response.data;
-                if (!otherUser.image_url) {
-                    otherUser.image_url = "img/default-user.png";
-                }
+
 
                 this.setState({
                     id: otherUser.id,
@@ -48,19 +46,19 @@ export default class OtherProfile extends React.Component {
             <div className="other-profile">
 
                 <div className="user-bio">
-                    <img
-                        src={ this.state.imageUrl }
-                        className="avatar"
-                    />
+                    {!!this.state.imageUrl && <img src={this.state.imageUrl} className="avatar"/>}
+                    {!this.state.imageUrl && <img src="/img/default-user.png"
+                        className="avatar"/>}
+
 
                     <div className="user-bio-text">
                         <h2>{ this.state.first } { this.state.last }</h2>
+                        <h3 className="about-me">About me:</h3>
                         <p>{ this.state.bio }</p>
                     </div>
                 </div>
 
-                <div>
-
+                <div className="btn-div">
                     <FriendButton
                         otherId={ this.props.match.params.userId }/>
                 </div>

@@ -2,6 +2,8 @@ import React from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getFriendsWannabes, acceptFriendRequest, unfriend } from './actions';
+import { Link } from 'react-router-dom';
+
 
 class Friends extends React.Component {
 
@@ -30,16 +32,16 @@ class Friends extends React.Component {
                     {!!friends.length &&
                     friends.map(friend => (
                         <div className="friend-profile" key={friend.id}>
-                            <div className="user-bio" >
-                                {!!friend.image_url && <img src={friend.image_url} className="avatar"/>}
-                                {!friend.image_url && <img src="/img/default-user.png"
-                                    className="avatar"/>}
-
-                                <div className="user-name">
-                                    <h3>{friend.first} {friend.last}</h3>
+                            <Link to={"/user/" + friend.id}>
+                                <div className="user-bio" >
+                                    {!!friend.image_url && <img src={friend.image_url} className="avatar"/>}
+                                    {!friend.image_url && <img src="/img/default-user.png"
+                                        className="avatar"/>}
+                                    <div className="user-name">
+                                        <h3>{friend.first} {friend.last}</h3>
+                                    </div>
                                 </div>
-
-                            </div>
+                            </Link>
                             <div>
                                 <button className="app-btn-on" onClick={
                                     () => {

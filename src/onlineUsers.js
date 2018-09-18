@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class OnlineUsers extends React.Component {
 
@@ -19,15 +20,19 @@ class OnlineUsers extends React.Component {
                     {onlineUsers.map(user => (
                         // if we use curly braces instead of parentheses here, we need to return!!
                         <div className="other-profile" key={user.id}>
-                            <div className="user-bio" >
-                                {!!user.image_url && <img src={user.image_url} className="avatar"/>}
-                                {!user.image_url && <img src="/img/default-user.png"
-                                    className="avatar"/>}
+                            <Link to={"/user/" + user.id}>
+                                <div className="user-bio" >
+                                    {!!user.image_url && <img src={user.image_url} className="avatar"/>}
+                                    {!user.image_url && <img src="/img/default-user.png"
+                                        className="avatar"/>}
 
-                                <div className="user-bio-text">
-                                    <h3>{user.first} {user.last}</h3>
+                                    <div className="green-online-dot"></div>
+
+                                    <div className="user-bio-text">
+                                        <h3>{user.first} {user.last}</h3>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     ))}
                 </div>

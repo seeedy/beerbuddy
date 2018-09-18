@@ -2,19 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getSocket } from './socket';
 
+
 class Chat extends React.Component {
+
+    componentDidUpdate() {
+        if (!this.elem) {
+            return;
+        }
+        this.elem.scrollTop = this.elem.scrollHeight - this.elem.clientHeight;
+    }
 
     sendChatMessage(e) {
         if (e.which === 13) {
             getSocket().emit('sendMessage', e.target.value);
+            e.target.value = '';
         }
     }
 
     render() {
 
         const { msgs } = this.props;
-        console.log('mounting chat');
-
         if (!msgs) {
             return null;
         }
@@ -23,8 +30,9 @@ class Chat extends React.Component {
             <div id="chat-wrapper">
                 <h2>Public chat</h2>
 
-                <div className="chat-box" ref={elem => (this.elem = elem)}>
-                    <div className="chat-display">
+                <div className="chat-box">
+                    <div className="chat-display"
+                        ref={elem => (this.elem = elem)}>
 
                         {msgs.map(msg => (
                             <div className="chat-content" key={msg.msg_id}>
@@ -50,7 +58,7 @@ class Chat extends React.Component {
                         <textarea
                             className="chat-textarea"
                             onKeyDown={ this.sendChatMessage }
-                            defaultValue="chat...">
+                            placeholder="send message">
                         </textarea>
                     </div>
                 </div>

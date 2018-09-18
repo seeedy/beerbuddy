@@ -262,7 +262,7 @@ textarea {
     width: 550px;
     padding: 0 15px;
     margin: 0 auto;
-    background: #fff;
+    /* background: #fff; */
 }
 
 
@@ -335,12 +335,12 @@ textarea {
     position: relative;
     margin-bottom: 10px;
     background: #fff;
+    border: 1px solid #e6ecf0;
 }
 
 .other-profile,
 .friend-profile {
     padding-bottom: 5px;
-    border-bottom: 1px solid dimgrey;
 }
 
 .friend-profile {
@@ -353,6 +353,12 @@ textarea {
     padding-right: 20px;
 }
 
+.friend-profile a,
+.other-profile a {
+    text-decoration: none;
+    color: black;
+}
+
 .user-bio {
     padding: 10px;
     display: flex;
@@ -360,15 +366,15 @@ textarea {
     align-items: center;
 }
 
+
 .user-bio-text,
 .user-name {
     padding: 0 10px;
     vertical-align: top;
 }
 
-.bio-text h2 {
-    background: inherit;
-    margin: 0;
+.about-me{
+    margin-top: 40px;
 }
 
 .friend-btn {
@@ -401,24 +407,46 @@ textarea {
     cursor: pointer;
 }
 
+.btn-div {
+    text-align: right;
+    padding: 10px;
+}
+
+.green-online-dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: limegreen;
+    box-shadow: inset 0 0 5px green;
+    position: relative;
+    top: 28px;
+    left: -14px;
+}
+
+
+
+/************* CHAT ********************/
+/***************************************/
 #chat-wrapper {
     width: 100%;
 }
 
 .chat-box {
-    height: 450px;
-    border: 1px solid dimgrey;
+    height: 500px;
+    border: 2px solid dimgrey;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
 }
 
 .chat-display {
-    height: 350px;
+    height: 440px;
     overflow-y: auto;
+    background: #fff;
 }
 
 .chat-input {
-    height: 100px;
+    height: 60px;
     border: none;
 }
 
@@ -442,8 +470,8 @@ textarea {
 }
 
 .chat-message-avatar {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
@@ -470,5 +498,16 @@ textarea {
 
 .chat-message-text {
     overflow-wrap: break-word;
-    width: 100%;
+}
+
+.chat-textarea {
+    padding: 5px;
+    background: none repeat scroll 0 0 #e6ecf0;
+    font-family: "Nunito", sans-serif;
+    transition: all 0.2s ease 0s;
+}
+
+.chat-textarea:focus {
+    padding: 5px;
+    background: none repeat scroll 0 0 #fff;
 }

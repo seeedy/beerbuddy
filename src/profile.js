@@ -6,9 +6,7 @@ export default function Profile(props) {
     return (
         <div className="profile">
 
-
             <div className="user-bio">
-
 
                 <img
                     src={ props.imageUrl }
