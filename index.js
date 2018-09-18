@@ -10,6 +10,7 @@ const multer = require('multer');
 const uidSafe = require('uid-safe');
 const path = require('path');
 const s3 = require('./s3');
+const moment = require('moment');
 const config = require('./config.json');
 const server = require('http').Server(app);
 const io = require('socket.io')(server, { origins: 'localhost:8080' });
@@ -100,16 +101,15 @@ app.post('/registration', (req, res) => {
         })
         .then(
             (response) => {
-                console.log('response from db:', response.rows[0]);
                 let user = response.rows[0];
                 req.session.user = {
                     id: user.id,
                     first: user.first,
                     last: user.last,
                     email: user.email,
-                    imageUrl: user.image_url
+                    imageUrl: user.image_url,
+                    joinDate: moment(user.created_at).format('MMMM YYYY')
                 };
-                console.log(req.session.user);
                 res.json({
                     success: true
                 });
@@ -136,7 +136,8 @@ app.post('/login', (req, res) => {
                             last: user.last,
                             email: user.email,
                             imageUrl: user.image_url,
-                            bio: user.bio
+                            bio: user.bio,
+                            joinDate: moment(user.created_at).format('MMMM YYYY')
                         };
                         console.log(req.session.user);
                         res.json({
@@ -214,7 +215,7 @@ app.get('/get-user/:userId', (req, res) => {
         });
     }
 
-    db.getOtherProfileById(req.params.userId)
+    db.getProfileById(req.params.userId)
         .then(response => {
             res.json(response.rows[0]);
         });
@@ -348,7 +349,7 @@ io.on('connection', socket => {
         let msgData = [];
         response.rows.forEach(row => {
             // row.localTime = row.msg_time.toLocaleDateString('de-DE', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-            row.localTime = row.msg_time.toLocaleDateString('de-DE', {  weekday: 'long', hour: 'numeric', minute: 'numeric' });
+            row.localTime = moment(row.msg_time, 'MMDD, h:mm').fromNow();
             msgData.push(row);
         });
         socket.emit('chatMessages', msgData.reverse());
@@ -362,17 +363,12 @@ io.on('connection', socket => {
         }).then(response => {
             let msgData = [];
             response.rows.forEach(row => {
-                row.localTime = row.msg_time.toLocaleDateString('de-DE', {  weekday: 'long', hour: 'numeric', minute: 'numeric' });
+                row.localTime = moment(row.msg_time, 'MMDD, h:mm').fromNow();
                 msgData.push(row);
             });
             return io.sockets.emit('newChatMessage', msgData.reverse().pop());
         });
 
-        // io.sockets.emit('newChatMessage', {
-        //     message: msg,
-        //     id: userId
-        //     ts: new Date().toLocalDateString()
-        // })
     });
 
 

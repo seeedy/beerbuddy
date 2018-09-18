@@ -30,6 +30,9 @@ export default function Profile(props) {
                                 <i className="fas fa-user-edit" onClick={ props.toggleBio }></i>
                                 <span className="tooltip">Edit bio</span>
                             </div>
+                            <div>
+                                <p className="join-date">Joined { props.joinDate }</p>
+                            </div>
                         </div>
                     )}
                 </div>

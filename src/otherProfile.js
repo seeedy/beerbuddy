@@ -24,11 +24,10 @@ export default class OtherProfile extends React.Component {
 
                 if (response.data.ownProfile) {
                     console.log('own profile is true');
-                    this.props.history.push('/');
+                    // this.props.history.push('/');
                 }
 
                 let otherUser = response.data;
-
 
                 this.setState({
                     id: otherUser.id,
@@ -66,7 +65,3 @@ export default class OtherProfile extends React.Component {
         );
     }
 }
-
-
-
-// new routes for making, accepting, rejecting, ending friend request

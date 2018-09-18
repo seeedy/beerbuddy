@@ -20,7 +20,8 @@ export default class App extends React.Component {
             email: '',
             bio: '',
             imageUrl: '',
-            showBio: false
+            showBio: false,
+            joinDate: ''
         };
 
         /// !!!!!!!! ALWAYS BIND THE METHODS TO THIS !!!!!!!
@@ -34,6 +35,7 @@ export default class App extends React.Component {
     componentDidMount() {
         axios.get('/user').then(
             ({ data }) => {
+                console.log(data);
                 if (!data.imageUrl) {
                     data.imageUrl = "/img/default-user.png";
                 }
@@ -130,10 +132,12 @@ export default class App extends React.Component {
                             last={ this.state.last }
                             imageUrl={ this.state.imageUrl }
                             bio={ this.state.bio }
+                            joinDate={ this.state.joinDate }
                             showBio={ this.state.showBio }
                             toggleBio={ this.toggleBio }
                             setBio={ this.setBio }
                         />
+
                     </div>
                     <BrowserRouter>
                         <div className="router-content">

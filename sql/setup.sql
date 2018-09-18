@@ -10,7 +10,8 @@ CREATE TABLE users(
     email VARCHAR(200) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     image_url VARCHAR(300),
-    bio VARCHAR(500)
+    bio VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 

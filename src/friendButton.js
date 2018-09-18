@@ -20,7 +20,6 @@ export default class FriendButton extends React.Component {
         // on rendering user profile -> set button text
         const response = await
         axios.get(`/friends/${ this.props.otherId }`);
-        console.log('Mounting data: ', response);
 
         if (response.data) {
             this.getButtonText(response.data.status, response.data.sender_id);
@@ -95,7 +94,6 @@ export default class FriendButton extends React.Component {
 
 
     render() {
-        console.log('rendering');
         return <button
             className={ this.state.buttonClass }
             onClick={ this.clickHandler }>

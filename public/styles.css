@@ -373,6 +373,11 @@ textarea {
     vertical-align: top;
 }
 
+.join-date {
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
 .about-me{
     margin-top: 40px;
 }
@@ -502,7 +507,7 @@ textarea {
 
 .chat-textarea {
     padding: 5px;
-    background: none repeat scroll 0 0 #e6ecf0;
+    background: none repeat scroll 0 0 ghostwhite;
     font-family: "Nunito", sans-serif;
     transition: all 0.2s ease 0s;
 }

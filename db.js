@@ -47,7 +47,7 @@ module.exports.updateBio = (bio, id) => {
     );
 };
 
-module.exports.getOtherProfileById = (userId) => {
+module.exports.getProfileById = (userId) => {
     return db.query(
         `
         SELECT id, first, last, image_url, bio
