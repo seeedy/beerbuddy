@@ -60,6 +60,6 @@ export function getChatMessages(data) {
 export function newChatMessage(data) {
     return {
         type: 'NEW_CHAT_MESSAGE',
-        msg: data
+        newMsg: data
     };
 }

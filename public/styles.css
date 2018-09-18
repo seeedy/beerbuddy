@@ -414,6 +414,7 @@ textarea {
 
 .chat-display {
     height: 350px;
+    overflow-y: auto;
 }
 
 .chat-input {
@@ -428,4 +429,46 @@ textarea {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     resize: none;
+}
+
+.chat-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.chat-avatar-box {
+    padding: 5px;
+}
+
+.chat-message-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.chat-message {
+    width: calc(100% - 55px);
+}
+
+.chat-sender {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sender-name {
+    font-weight: bold;
+}
+
+
+.time-sent {
+    margin-right: 20px;
+    font-size: 0.6rem;
+}
+
+
+.chat-message-text {
+    overflow-wrap: break-word;
+    width: 100%;
 }

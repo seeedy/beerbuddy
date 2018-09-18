@@ -140,7 +140,7 @@ module.exports.getChatMessages = () => {
         FROM messages
         JOIN users
         ON messages.sender_id = users.id
-        ORDER BY messages.id ASC LIMIT 10
+        ORDER BY messages.id DESC LIMIT 10
         `
     );
 };

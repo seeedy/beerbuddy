@@ -345,8 +345,13 @@ io.on('connection', socket => {
     });
 
     db.getChatMessages().then(response => {
-        console.log('chat msgs:', response.rows);
-        socket.emit('chatMessages', response.rows);
+        let msgData = [];
+        response.rows.forEach(row => {
+            // row.localTime = row.msg_time.toLocaleDateString('de-DE', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+            row.localTime = row.msg_time.toLocaleDateString('de-DE', {  weekday: 'long', hour: 'numeric', minute: 'numeric' });
+            msgData.push(row);
+        });
+        socket.emit('chatMessages', msgData.reverse());
     });
 
     socket.on('sendMessage', msg => {
@@ -355,7 +360,12 @@ io.on('connection', socket => {
             // THE SEQUENTIAL STUFF !!!!!!!!!!!!!!!
             return db.getChatMessages();
         }).then(response => {
-            console.log('getting the last comment', response.rows.pop());
+            let msgData = [];
+            response.rows.forEach(row => {
+                row.localTime = row.msg_time.toLocaleDateString('de-DE', {  weekday: 'long', hour: 'numeric', minute: 'numeric' });
+                msgData.push(row);
+            });
+            return io.sockets.emit('newChatMessage', msgData.reverse().pop());
         });
 
         // io.sockets.emit('newChatMessage', {

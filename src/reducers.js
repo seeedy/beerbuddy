@@ -83,5 +83,18 @@ export default function (state = {}, action) {
             msgs: action.msgs
         };
     }
+
+    if (action.type == 'NEW_CHAT_MESSAGE') {
+        console.log('running reducers', action);
+
+        const updatedMsgs = [ ...state.msgs, action.newMsg ];
+
+        state = {
+            ...state,
+            msgs: updatedMsgs
+        };
+    }
+
+
     return state;
 }

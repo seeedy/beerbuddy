@@ -25,7 +25,26 @@ class Chat extends React.Component {
 
                 <div className="chat-box" ref={elem => (this.elem = elem)}>
                     <div className="chat-display">
-                        chat messages
+
+                        {msgs.map(msg => (
+                            <div className="chat-content" key={msg.msg_id}>
+
+                                <div className="chat-avatar-box">
+                                    <img className="chat-message-avatar" src={msg.msg_sender_img} />
+                                </div>
+
+                                <div className="chat-message">
+                                    <div className="chat-sender">
+                                        <div className="sender-name">{msg.msg_sender_first} {msg.msg_sender_last}</div>
+                                        <div className="time-sent">{msg.localTime}</div>
+                                    </div>
+                                    <div className="chat-message-text">
+                                        {msg.msg_text}
+                                    </div>
+                                </div>
+
+                            </div>
+                        ))}
                     </div>
                     <div className="chat-input">
                         <textarea
