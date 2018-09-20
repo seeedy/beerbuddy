@@ -121,7 +121,6 @@ app.post('/registration', (req, res) => {
         );
 });
 
-
 app.post('/login', (req, res) => {
     let { email, password } = req.body;
     db.getUserByEmail(email)
@@ -164,11 +163,9 @@ app.get('/logout', (req, res) => {
     res.redirect("/");
 });
 
-
 app.get('/user', (req, res) => {
     res.json(req.session.user);
 });
-
 
 // uploader is used as middleware to handle uploads on post route
 // insert profile pic to db
@@ -241,7 +238,6 @@ app.post('/updateBar', (req, res) => {
             });
         });
 });
-
 
 app.get('/get-user/:userId', (req, res) => {
     db.getProfileById(req.params.userId)
@@ -347,7 +343,13 @@ app.get('/fof/:userId', (req, res) => {
         });
 });
 
-
+app.get('/userSearch/:search', (req, res) => {
+    db.userSearch(req.params.search)
+        .then(response => {
+            console.log('resp from usersearch', response.rows);
+            res.json(response.rows);
+        });
+});
 
 
 // *************** DO NOT TOUCH ******************
@@ -381,7 +383,6 @@ io.on('connection', socket => {
     let arrayOfIds = Object.values(onlineUsers);
 
     db.getOnlineUsersByIds(arrayOfIds).then(response => {
-        console.log('onlineusers', response.rows);
         // filter out own profile
         socket.emit('onlineUsers', response.rows.filter(row => row.id != userId));
         socket.broadcast.emit('userJoined', response.rows.find(user => user.id == userId));

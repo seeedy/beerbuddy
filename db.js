@@ -190,3 +190,15 @@ module.exports.getFriendsOfFriends = (userId) => {
         [userId]
     );
 };
+
+module.exports.userSearch = search => {
+    search += "%";
+    return db.query(`
+        SELECT id, first, last, image_url
+        FROM users
+        WHERE first ILIKE $1
+        LIMIT 6
+        `,
+    [search]
+    );
+};

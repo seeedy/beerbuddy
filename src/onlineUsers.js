@@ -7,8 +7,13 @@ class OnlineUsers extends React.Component {
     render() {
 
         const { onlineUsers } = this.props;
+        console.log('online', onlineUsers);
 
         if (!onlineUsers) {
+            return null;
+        }
+
+        if (onlineUsers.length == 0) {
             return null;
         }
 

@@ -11,6 +11,7 @@ import OnlineUsers from './onlineUsers';
 import Chat from './chat';
 import EditProfile from './editProfile';
 import FriendsOfFriends from './fof';
+import Search from './search';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -27,7 +28,6 @@ export default class App extends React.Component {
         this.setBio = this.setBio.bind(this);
         this.setBeer = this.setBeer.bind(this);
         this.setBar = this.setBar.bind(this);
-
     }
 
     componentDidMount() {
@@ -37,7 +37,6 @@ export default class App extends React.Component {
                     data.imageUrl = "/img/default-user.png";
                 }
                 this.setState(data);
-
             }
         );
     }
@@ -90,46 +89,52 @@ export default class App extends React.Component {
             );
         }
         return (
-            <div id="page-outer">
-                <div className="header">
+            <BrowserRouter>
+                <div id="page-outer">
+                    <div className="header">
 
-                    <div className="header-links">
-                        <a href="/chat">
-                            <i className="fas fa-comments"></i>
-                        Chat</a>
+                        <div className="header-links">
+                            <a href="/chat">
+                                <i className="fas fa-comments"></i>
+                            Chat</a>
 
-                        <a href="/online">
-                            <i className="fas fa-globe"></i>
-                        Online Users</a>
+                            <a href="/online">
+                                <i className="fas fa-globe"></i>
+                            Online Users</a>
 
-                        <a href="/friends">
-                            <i className="fas fa-user-friends"></i>
-                        Friends</a>
+                            <a href="/friends">
+                                <i className="fas fa-user-friends"></i>
+                            Friends</a>
+                        </div>
+
+                        <Logo />
+
+
+
+                        <div className="header-logout">
+
+                            <Search />
+
+                            <ProfilePic
+                                imageUrl={ this.state.imageUrl }
+                                first={ this.state.first }
+                                last={ this.state.last }
+                                clickHandler={ this.showUploader } />
+
+                            <a href="/logout">
+                                <i className="fas fa-sign-out-alt"></i>
+                            Logout</a>
+                        </div>
+
                     </div>
-
-                    <Logo />
-
-                    <div className="header-logout">
-                        <ProfilePic
-                            imageUrl={ this.state.imageUrl }
-                            first={ this.state.first }
-                            last={ this.state.last }
-                            clickHandler={ this.showUploader } />
-
-                        <a href="/logout">
-                            <i className="fas fa-sign-out-alt"></i>
-                        Logout</a>
-                    </div>
-
-                </div>
-                {this.state.uploaderShown &&
-                    <Uploader
-                        updateImage={ this.updateImage }
-                        clickHandler={ this.closeUploader } />}
+                    {this.state.uploaderShown &&
+                        <Uploader
+                            updateImage={ this.updateImage }
+                            clickHandler={ this.closeUploader } />}
 
 
 
-                <BrowserRouter>
+
 
                     <div className="app-content">
 
@@ -146,7 +151,8 @@ export default class App extends React.Component {
                             <Route
                                 exact path="/"
                                 component={ OnlineUsers }
-                            /><Route
+                            />
+                            <Route
                                 exact path="/chat"
                                 component={ OnlineUsers }
                             />
@@ -171,6 +177,23 @@ export default class App extends React.Component {
 
                         <div className="router-content">
 
+                            <Route
+                                exact path="/"
+                                render={ () =>  (
+                                    <EditProfile
+                                        first={ this.state.first }
+                                        last={ this.state.last }
+                                        imageUrl={ this.state.imageUrl }
+                                        bio={ this.state.bio }
+                                        favBeer={ this.state.favBeer }
+                                        favBar={ this.state.favBar }
+                                        joinDate={ this.state.joinDate }
+                                        setBio={ this.setBio }
+                                        setBar={ this.setBar }
+                                        setBeer={ this.setBeer }
+                                    />
+                                )}
+                            />
                             <Route
                                 exact path="/user/:userId"
                                 component={ OtherProfile }
@@ -206,9 +229,8 @@ export default class App extends React.Component {
                             />
                         </div>
                     </div>
-                </BrowserRouter>
-
-            </div>
+                </div>
+            </BrowserRouter>
         );
     }
 }

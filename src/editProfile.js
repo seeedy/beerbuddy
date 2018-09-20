@@ -103,7 +103,8 @@ export default class EditProfile extends React.Component {
                     <div className="user-bio-text">
                         <h2>{ this.props.first } { this.props.last }</h2>
                         <div>
-                            <p className="join-date">Joined { this.props.joinDate }</p>
+
+                            <p className="join-date"><i className="far fa-calendar-alt"></i> Joined { this.props.joinDate }</p>
                         </div>
 
                         <div>
@@ -112,6 +113,7 @@ export default class EditProfile extends React.Component {
                                 <textarea
                                     onKeyDown={ this.updateBio }
                                     defaultValue={ this.props.bio }
+                                    className="bio-textarea"
                                 />
                             ) : (
                                 <div>
@@ -128,6 +130,7 @@ export default class EditProfile extends React.Component {
                                 <textarea
                                     onKeyDown={ this.updateBeer }
                                     defaultValue={ this.props.favBeer }
+                                    className="bio-textarea"
                                 />
                             ) : (
                                 <div>
@@ -144,6 +147,7 @@ export default class EditProfile extends React.Component {
                                 <textarea
                                     onKeyDown={ this.updateBar }
                                     defaultValue={ this.props.favBar }
+                                    className="bio-textarea"
                                 />
                             ) : (
                                 <div>

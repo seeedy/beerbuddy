@@ -63,7 +63,7 @@ export default class OtherProfile extends React.Component {
                     <div className="user-bio-text">
                         <h2>{ this.state.first } { this.state.last }</h2>
                         <div>
-                            <p className="join-date">Joined { this.state.joinDate }</p>
+                            <p className="join-date"><i className="far fa-calendar-alt"></i> Joined { this.state.joinDate }</p>
                         </div>
                         <div>
                             <h3 className="about-me">About me:</h3>
