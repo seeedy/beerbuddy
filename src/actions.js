@@ -72,3 +72,9 @@ export async function getFriendsOfFriends(userId) {
         fof: data.fof
     };
 }
+
+export function nullifyFof() {
+    return {
+        type: 'NULLIFY_FOF',
+    };
+}

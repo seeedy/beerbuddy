@@ -99,6 +99,16 @@ export default function (state = {}, action) {
         };
     }
 
+    if (action.type == 'NULLIFY_FOF') {
+        console.log('running reducers', action);
+
+
+        state = {
+            ...state,
+            fof: null
+        };
+    }
+
 
     return state;
 }

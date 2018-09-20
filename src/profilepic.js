@@ -5,7 +5,7 @@ export default function ProfilePic(props) {
     return (
         <div className="user-avatar-div">
             <img src={ props.imageUrl }
-                className="avatar"
+                className="header-avatar"
                 onClick={ props.clickHandler }
             />
 

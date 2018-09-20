@@ -246,15 +246,23 @@ app.post('/updateBar', (req, res) => {
 app.get('/get-user/:userId', (req, res) => {
     db.getProfileById(req.params.userId)
         .then(response => {
-            console.log({
-                ...response.rows[0], ownProfile: true
-            });
+            console.log('resp on server', response.rows[0]);
+            let data = response.rows[0];
             if (req.params.userId == req.session.user.id) {
                 return res.json({
-                    ...response.rows[0], ownProfile: true
+                    ownProfile: true
                 });
             } else {
-                res.json(response.rows[0]);
+                res.json({
+                    id: data.id,
+                    first: data.first,
+                    last: data.last,
+                    imageUrl: data.image_url,
+                    bio: data.bio,
+                    favBeer: data.favorite_beer,
+                    favBar: data.favorite_bar,
+                    joinDate: moment(data.created_at).format('MMMM YYYY')
+                });
             }
         });
 });
@@ -333,6 +341,7 @@ app.get('/fof/:userId', (req, res) => {
         .then(response => {
             console.log('fof', response.rows);
             res.json({
+                // filter out own profile
                 fof: response.rows.filter(row => row.id != req.session.user.id)
             });
         });
@@ -372,7 +381,9 @@ io.on('connection', socket => {
     let arrayOfIds = Object.values(onlineUsers);
 
     db.getOnlineUsersByIds(arrayOfIds).then(response => {
-        socket.emit('onlineUsers', response.rows);
+        console.log('onlineusers', response.rows);
+        // filter out own profile
+        socket.emit('onlineUsers', response.rows.filter(row => row.id != userId));
         socket.broadcast.emit('userJoined', response.rows.find(user => user.id == userId));
     });
 

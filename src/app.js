@@ -17,13 +17,7 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             id: null,
-            first: '',
-            last: '',
-            email: '',
-            bio: '',
-            imageUrl: '',
             showBio: false,
-            joinDate: ''
         };
 
         /// !!!!!!!! ALWAYS BIND THE METHODS TO THIS !!!!!!!
@@ -98,29 +92,34 @@ export default class App extends React.Component {
         return (
             <div id="page-outer">
                 <div className="header">
+
+                    <div className="header-links">
+                        <a href="/chat">
+                            <i className="fas fa-comments"></i>
+                        Chat</a>
+
+                        <a href="/online">
+                            <i className="fas fa-globe"></i>
+                        Online Users</a>
+
+                        <a href="/friends">
+                            <i className="fas fa-user-friends"></i>
+                        Friends</a>
+                    </div>
+
                     <Logo />
 
-                    <a href="/chat">
-                        <i className="fas fa-comments"></i>
-                    Chat</a>
+                    <div className="header-logout">
+                        <ProfilePic
+                            imageUrl={ this.state.imageUrl }
+                            first={ this.state.first }
+                            last={ this.state.last }
+                            clickHandler={ this.showUploader } />
 
-                    <a href="/online">
-                        <i className="fas fa-globe"></i>
-                    Online Users</a>
-
-                    <a href="/friends">
-                        <i className="fas fa-user-friends"></i>
-                    Friends</a>
-
-                    <a href="/logout">
-                        <i className="fas fa-sign-out-alt"></i>
-                    Logout</a>
-
-                    <ProfilePic
-                        imageUrl={ this.state.imageUrl }
-                        first={ this.state.first }
-                        last={ this.state.last }
-                        clickHandler={ this.showUploader } />
+                        <a href="/logout">
+                            <i className="fas fa-sign-out-alt"></i>
+                        Logout</a>
+                    </div>
 
                 </div>
                 {this.state.uploaderShown &&
@@ -161,11 +160,11 @@ export default class App extends React.Component {
                             />
                             <Route
                                 exact path="/user/:userId"
-                                render={ () =>  (
+                                render={ (props) =>  (
                                     <FriendsOfFriends
-                                        ownId={ this.state.id }
+                                        friendId={props.match.params.userId}
                                     />
-                                )}                            
+                                )}
                             />
                         </div>
 

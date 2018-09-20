@@ -72,7 +72,7 @@ module.exports.updateBar = (bar, id) => {
 module.exports.getProfileById = (userId) => {
     return db.query(
         `
-        SELECT id, first, last, image_url, bio
+        SELECT first, last, image_url, bio, favorite_beer, favorite_bar, created_at
         FROM users
         WHERE id = $1
         `,

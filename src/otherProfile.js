@@ -9,12 +9,22 @@ export default class OtherProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: null,
-            first: '',
-            last: '',
-            imageUrl: '',
-            bio: ''
+            prevId: this.props.match.params.userId
         };
+    }
+
+    static getDerivedStateFromProps(props, state) {
+    // Store prevId in state so we can compare when props change.
+    // Clear out previously-loaded data (so we don't render stale stuff).
+        if (props.match.params.userId !== state.prevId) {
+            return {
+                prevId: props.match.params.userId,
+                first: null
+            };
+        }
+
+        // No state update necessary
+        return null;
     }
 
 
@@ -26,17 +36,17 @@ export default class OtherProfile extends React.Component {
                     console.log('own profile is true');
                     this.props.history.push('/editProfile');
                 }
-
-                let otherUser = response.data;
-
-                this.setState({
-                    id: otherUser.id,
-                    first: otherUser.first,
-                    last: otherUser.last,
-                    imageUrl: otherUser.image_url,
-                    bio: otherUser.bio
-                });
+                this.setState(response.data);
             });
+    }
+
+    componentDidUpdate() {
+        if (this.state.first === null) {
+            axios.get(`/get-user/${this.props.match.params.userId}`)
+                .then(response => {
+                    this.setState(response.data);
+                });
+        }
     }
 
 
@@ -52,7 +62,9 @@ export default class OtherProfile extends React.Component {
 
                     <div className="user-bio-text">
                         <h2>{ this.state.first } { this.state.last }</h2>
-
+                        <div>
+                            <p className="join-date">Joined { this.state.joinDate }</p>
+                        </div>
                         <div>
                             <h3 className="about-me">About me:</h3>
                             <p>{ this.state.bio }</p>

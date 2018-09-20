@@ -1,15 +1,60 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getFriendsOfFriends } from './actions';
+import { getFriendsOfFriends, nullifyFof } from './actions';
+import axios from './axios';
+
 
 class FriendsOfFriends extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            prevId: this.props.friendId
+        };
+    }
+
+    static getDerivedStateFromProps(props, state) {
+    // Store prevId in state so we can compare when props change.
+    // Clear out previously-loaded data (so we don't render stale stuff).
+        if (props.friendId !== state.prevId) {
+            props.dispatch(nullifyFof());
+            return {
+                prevId: props.friendId,
+            };
+        }
+
+        // No state update necessary
+        return state;
+    }
+
     componentDidMount() {
-        const friendId = window.location.pathname.split("/").slice(-1)[0];
-        console.log('friendId', friendId);
+        // get the list of FoF
+        const friendId = this.props.friendId;
         this.props.dispatch(getFriendsOfFriends(friendId));
-        console.log('props', this.props);
+
+        axios.get(`/get-user/${this.props.friendId}`)
+            .then(response => {
+
+                this.setState({
+                    friendFirst: response.data.first
+                });
+            });
+
+    }
+
+    componentDidUpdate() {
+        console.log('component is updating', this.state);
+        if (this.props.fof === null) {
+            this.props.dispatch(getFriendsOfFriends(this.props.friendId));
+            axios.get(`/get-user/${this.props.friendId}`)
+                .then(response => {
+
+                    this.setState({
+                        friendFirst: response.data.first
+                    });
+                });
+        }
     }
 
 
@@ -22,7 +67,7 @@ class FriendsOfFriends extends React.Component {
 
         return (
             <div id="online-users-wrapper">
-                <h2>FoF</h2>
+                <h2>{this.state.friendFirst}&#39;s friends</h2>
                 <div className="online-users">
                     {fof.map(user => (
                         // if we use curly braces instead of parentheses here, we need to return!!

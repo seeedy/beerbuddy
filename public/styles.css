@@ -9,7 +9,7 @@ body {
     overflow-y: scroll;
     overflow-x: hidden;
     margin: 0;
-    font-family: "Nunito", sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
     background-color: #e6ecf0;
 }
 
@@ -174,12 +174,22 @@ button:focus {
 .header {
     position: relative;
     border-bottom: 1px solid dimgrey;
-    height: 96px;
+    height: 54px;
     background: royalblue;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Lato', sans-serif;
+}
+
+.header-avatar {
+    height: 42px;
+    width: 42px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    float: right;
+    margin-right: 50px;
+    cursor: pointer;
 }
 
 .avatar {
@@ -194,25 +204,32 @@ button:focus {
     align-self: flex-start;
 }
 
-.header .avatar {
-    float: right;
-    margin-right: 50px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.header .avatar:hover {
+.header-avatar:hover {
     box-shadow: 0 0 12px gold;
 }
 
-.user-avatar-div:hover .avatar-tooltip {
-    visibility: visible;
+.header-links {
+    margin-left: 60px;
+    width: 25%;
+    float: left;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-logout {
+    margin-right: 60px;
+    width: 25%;
+    float: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .header a {
     text-decoration: none;
-    font-size: 1.5em;
+    font-weight: bold;
     color: white;
+    font-size: 15px;
 }
 
 .header a:hover {
@@ -229,7 +246,12 @@ button:focus {
     vertical-align: center;
 }
 
-
+.fa-comments,
+.fa-globe,
+.fa-user-friends,
+.fa-sign-out-alt {
+    font-size: 1.2rem;
+}
 
 /********************** APP ***********************/
 /*************************************************/
@@ -552,9 +574,9 @@ textarea {
 .send-msg-btn {
     font-size: 1.2rem;
     float: right;
-    padding: 18px 16px;
+    padding: 20px 17px;
     background: royalblue;
     color: white;
-    border: 1px solid #e6ecf0;
+    border-right: 1px solid #e6ecf0;
     cursor: pointer;
 }

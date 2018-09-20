@@ -5,9 +5,8 @@ export default function Logo() {
     let logoStyle = {
         color: "gold",
         fontSize: "2rem",
-        border: "5px solid gold",
-        padding: "12px",
-        marginLeft: "36px",
+        padding: "5px",
+        marginLeft: "50px",
         fontWeight: 300,
         float: "left"
     };
