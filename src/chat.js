@@ -4,6 +4,13 @@ import { getSocket } from './socket';
 
 
 class Chat extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+
+        /// !!!!!!!! ALWAYS BIND THE METHODS TO THIS !!!!!!!
+        this.sendChatMessageBtn = this.sendChatMessageBtn.bind(this);
+    }
 
     componentDidUpdate() {
         if (!this.elem) {
@@ -19,6 +26,12 @@ class Chat extends React.Component {
         }
     }
 
+    sendChatMessageBtn() {
+        console.log('send message btn', this.txt.value);
+        getSocket().emit('sendMessage', this.txt.value);
+        this.txt.value = '';
+    }
+
     render() {
 
         const { msgs } = this.props;
@@ -28,7 +41,6 @@ class Chat extends React.Component {
 
         return (
             <div id="chat-wrapper">
-                <h2>Public chat</h2>
 
                 <div className="chat-box">
                     <div className="chat-display"
@@ -58,9 +70,16 @@ class Chat extends React.Component {
                         <textarea
                             className="chat-textarea"
                             onKeyDown={ this.sendChatMessage }
-                            placeholder="send message">
+                            placeholder="enter message"
+                            ref={ elem => (this.txt = elem) }>
                         </textarea>
+                        <div
+                            className="send-msg-btn"
+                            onClick={ this.sendChatMessageBtn }>
+                            <i className="fas fa-paper-plane"></i>
+                        </div>
                     </div>
+
                 </div>
 
             </div>

@@ -9,6 +9,8 @@ import OtherProfile from './otherProfile';
 import Friends from './friends';
 import OnlineUsers from './onlineUsers';
 import Chat from './chat';
+import EditProfile from './editProfile';
+import FriendsOfFriends from './fof';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -28,14 +30,15 @@ export default class App extends React.Component {
         this.showUploader = this.showUploader.bind(this);
         this.updateImage = this.updateImage.bind(this);
         this.closeUploader = this.closeUploader.bind(this);
-        this.toggleBio = this.toggleBio.bind(this);
         this.setBio = this.setBio.bind(this);
+        this.setBeer = this.setBeer.bind(this);
+        this.setBar = this.setBar.bind(this);
+
     }
 
     componentDidMount() {
         axios.get('/user').then(
             ({ data }) => {
-                console.log(data);
                 if (!data.imageUrl) {
                     data.imageUrl = "/img/default-user.png";
                 }
@@ -65,24 +68,22 @@ export default class App extends React.Component {
         });
     }
 
-    toggleBio() {
+    setBio(bio) {
         this.setState({
-            showBio: !this.state.showBio
+            bio: bio,
         });
     }
 
-    setBio(e) {
-        if (e.which === 13) {
-            this.setState({
-                bio: e.target.value,
-                showBio: false
-            });
+    setBeer(beer) {
+        this.setState({
+            favBeer: beer,
+        });
+    }
 
-
-            axios.post('/profile', {
-                bio: e.target.value
-            });
-        }
+    setBar(bar) {
+        this.setState({
+            favBar: bar,
+        });
     }
 
     render() {
@@ -100,7 +101,7 @@ export default class App extends React.Component {
                     <Logo />
 
                     <a href="/chat">
-                        <i className="fas fa-globe"></i>
+                        <i className="fas fa-comments"></i>
                     Chat</a>
 
                     <a href="/online">
@@ -111,35 +112,64 @@ export default class App extends React.Component {
                         <i className="fas fa-user-friends"></i>
                     Friends</a>
 
-                    <a href="/logout">Logout</a>
+                    <a href="/logout">
+                        <i className="fas fa-sign-out-alt"></i>
+                    Logout</a>
 
                     <ProfilePic
                         imageUrl={ this.state.imageUrl }
                         first={ this.state.first }
                         last={ this.state.last }
                         clickHandler={ this.showUploader } />
+
                 </div>
                 {this.state.uploaderShown &&
                     <Uploader
                         updateImage={ this.updateImage }
                         clickHandler={ this.closeUploader } />}
 
-                <div className="app-content">
 
-                    <div className="left-dashboard">
-                        <Profile
-                            first={ this.state.first }
-                            last={ this.state.last }
-                            imageUrl={ this.state.imageUrl }
-                            bio={ this.state.bio }
-                            joinDate={ this.state.joinDate }
-                            showBio={ this.state.showBio }
-                            toggleBio={ this.toggleBio }
-                            setBio={ this.setBio }
-                        />
 
-                    </div>
-                    <BrowserRouter>
+                <BrowserRouter>
+
+                    <div className="app-content">
+
+                        <div className="left-dashboard">
+                            <Profile
+                                first={ this.state.first }
+                                last={ this.state.last }
+                                imageUrl={ this.state.imageUrl }
+                                bio={ this.state.bio }
+                                joinDate={ this.state.joinDate }
+                                setBio={ this.setBio }
+                            />
+
+                            <Route
+                                exact path="/"
+                                component={ OnlineUsers }
+                            /><Route
+                                exact path="/chat"
+                                component={ OnlineUsers }
+                            />
+                            <Route
+                                exact path="/friends"
+                                component={ OnlineUsers }
+                            />
+                            <Route
+                                exact path="/editProfile"
+                                component={ OnlineUsers }
+                            />
+                            <Route
+                                exact path="/user/:userId"
+                                render={ () =>  (
+                                    <FriendsOfFriends
+                                        ownId={ this.state.id }
+                                    />
+                                )}                            
+                            />
+                        </div>
+
+
                         <div className="router-content">
 
                             <Route
@@ -158,9 +188,27 @@ export default class App extends React.Component {
                                 exact path="/chat"
                                 component={ Chat }
                             />
+                            <Route
+                                exact path="/editProfile"
+                                render={ () =>  (
+                                    <EditProfile
+                                        first={ this.state.first }
+                                        last={ this.state.last }
+                                        imageUrl={ this.state.imageUrl }
+                                        bio={ this.state.bio }
+                                        favBeer={ this.state.favBeer }
+                                        favBar={ this.state.favBar }
+                                        joinDate={ this.state.joinDate }
+                                        setBio={ this.setBio }
+                                        setBar={ this.setBar }
+                                        setBeer={ this.setBeer }
+                                    />
+                                )}
+                            />
                         </div>
-                    </BrowserRouter>
-                </div>
+                    </div>
+                </BrowserRouter>
+
             </div>
         );
     }

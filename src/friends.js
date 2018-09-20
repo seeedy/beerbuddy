@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 class Friends extends React.Component {
 
     componentDidMount() {
-        console.log('mounting Friends');
         this.props.dispatch(getFriendsWannabes());
     }
 

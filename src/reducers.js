@@ -1,12 +1,10 @@
 export default function (state = {}, action) {
 
     if (action.type == 'RECEIVE_FRIENDS_WANNABES') {
-        console.log('running reducers', action);
         state = { ...state, users: action.users};
     }
 
     if (action.type == 'ACCEPT_FRIEND_REQUEST') {
-        console.log('running reducers', action);
         state = {
             ...state,
             users: state.users && state.users.map(user => {
@@ -19,7 +17,6 @@ export default function (state = {}, action) {
     }
 
     if (action.type == 'UNFRIEND') {
-        console.log('running reducers', action);
 
         state = {
             ...state,
@@ -29,7 +26,6 @@ export default function (state = {}, action) {
 
     // ********************** online users *****************************
     if (action.type == 'RECEIVE_ONLINE_USERS') {
-        console.log('running reducers', action);
 
         state = {
             ...state,
@@ -39,7 +35,6 @@ export default function (state = {}, action) {
 
 
     if (action.type == 'NEW_USER_JOINED') {
-        console.log('running reducers', action);
 
         let uniqueNewUser = true;
         state.onlineUsers.forEach(user => {
@@ -61,7 +56,6 @@ export default function (state = {}, action) {
     }
 
     if (action.type == 'USER_LEFT') {
-        console.log('running reducers', action);
 
         const onlineUsersUpdated = state.onlineUsers.filter(user => {
             return user.id != action.disconnectedUser;
@@ -76,7 +70,6 @@ export default function (state = {}, action) {
     // ********************** chat **************************
 
     if (action.type == 'GET_CHAT_MESSAGES') {
-        console.log('running reducers', action);
 
         state = {
             ...state,
@@ -85,13 +78,24 @@ export default function (state = {}, action) {
     }
 
     if (action.type == 'NEW_CHAT_MESSAGE') {
-        console.log('running reducers', action);
 
         const updatedMsgs = [ ...state.msgs, action.newMsg ];
 
         state = {
             ...state,
             msgs: updatedMsgs
+        };
+    }
+
+    // ******************* FoF ******************
+
+    if (action.type == 'GET_FOF') {
+        console.log('running reducers', action);
+
+
+        state = {
+            ...state,
+            fof: action.fof
         };
     }
 

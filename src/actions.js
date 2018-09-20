@@ -63,3 +63,12 @@ export function newChatMessage(data) {
         newMsg: data
     };
 }
+
+///////////////////////////// FoF /////////////////////////////////////
+export async function getFriendsOfFriends(userId) {
+    const { data } = await axios.get('/fof/' + userId);
+    return {
+        type: 'GET_FOF',
+        fof: data.fof
+    };
+}

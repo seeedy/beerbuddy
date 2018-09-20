@@ -24,7 +24,7 @@ export default class OtherProfile extends React.Component {
 
                 if (response.data.ownProfile) {
                     console.log('own profile is true');
-                    // this.props.history.push('/');
+                    this.props.history.push('/editProfile');
                 }
 
                 let otherUser = response.data;
@@ -52,8 +52,21 @@ export default class OtherProfile extends React.Component {
 
                     <div className="user-bio-text">
                         <h2>{ this.state.first } { this.state.last }</h2>
-                        <h3 className="about-me">About me:</h3>
-                        <p>{ this.state.bio }</p>
+
+                        <div>
+                            <h3 className="about-me">About me:</h3>
+                            <p>{ this.state.bio }</p>
+                        </div>
+
+                        <div>
+                            <h3 className="about-me">Favorite beer:</h3>
+                            <p>{ this.state.favBeer }</p>
+                        </div>
+
+                        <div>
+                            <h3 className="about-me">Favorite bar:</h3>
+                            <p>{ this.state.favBar }</p>
+                        </div>
                     </div>
                 </div>
 

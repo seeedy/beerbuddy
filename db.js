@@ -47,6 +47,28 @@ module.exports.updateBio = (bio, id) => {
     );
 };
 
+module.exports.updateBeer = (beer, id) => {
+    return db.query(
+        `
+        UPDATE users
+        SET favorite_beer = $1
+        WHERE id = $2
+        `,
+        [beer, id]
+    );
+};
+
+module.exports.updateBar = (bar, id) => {
+    return db.query(
+        `
+        UPDATE users
+        SET favorite_bar = $1
+        WHERE id = $2
+        `,
+        [bar, id]
+    );
+};
+
 module.exports.getProfileById = (userId) => {
     return db.query(
         `
@@ -152,5 +174,19 @@ module.exports.newChatMessage = (userId, msg) => {
         VALUES ($1, $2)
         `,
         [userId, msg]
+    );
+};
+
+
+module.exports.getFriendsOfFriends = (userId) => {
+    return db.query(
+        `
+        SELECT users.id, first, last, image_url, status
+        FROM friendships
+        JOIN users
+        ON (status = 2 AND receiver_id = $1 AND sender_id = users.id)
+        OR (status = 2 AND sender_id = $1 AND receiver_id = users.id)
+        `,
+        [userId]
     );
 };

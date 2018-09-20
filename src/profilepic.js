@@ -8,6 +8,7 @@ export default function ProfilePic(props) {
                 className="avatar"
                 onClick={ props.clickHandler }
             />
+
         </div>
     );
 }

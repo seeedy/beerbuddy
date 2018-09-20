@@ -11,6 +11,8 @@ CREATE TABLE users(
     password VARCHAR(100) NOT NULL,
     image_url VARCHAR(300),
     bio VARCHAR(500),
+    favorite_beer VARCHAR(100),
+    favorite_bar VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

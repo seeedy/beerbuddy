@@ -108,7 +108,9 @@ app.post('/registration', (req, res) => {
                     last: user.last,
                     email: user.email,
                     imageUrl: user.image_url,
-                    joinDate: moment(user.created_at).format('MMMM YYYY')
+                    joinDate: moment(user.created_at).format('MMMM YYYY'),
+                    favBeer: user.favorite_beer,
+                    favBar: user.favorite_bar
                 };
                 res.json({
                     success: true
@@ -137,7 +139,9 @@ app.post('/login', (req, res) => {
                             email: user.email,
                             imageUrl: user.image_url,
                             bio: user.bio,
-                            joinDate: moment(user.created_at).format('MMMM YYYY')
+                            joinDate: moment(user.created_at).format('MMMM YYYY'),
+                            favBeer: user.favorite_beer,
+                            favBar: user.favorite_bar
                         };
                         console.log(req.session.user);
                         res.json({
@@ -155,7 +159,7 @@ app.post('/login', (req, res) => {
         );
 });
 
-app.get("/logout", (req, res) => {
+app.get('/logout', (req, res) => {
     req.session = null;
     res.redirect("/");
 });
@@ -190,7 +194,7 @@ app.post('/profilepic', uploader.single('file'), s3.upload, (req, res) => {
 });
 
 // insert bio to db
-app.post('/profile', (req, res) => {
+app.post('/updateBio', (req, res) => {
     db.updateBio(req.body.bio, req.session.user.id)
         .then(() => {
             req.session.user.bio = req.body.bio;
@@ -206,42 +210,69 @@ app.post('/profile', (req, res) => {
         });
 });
 
-
-app.get('/get-user/:userId', (req, res) => {
-
-    if (req.params.userId == req.session.user.id) {
-        return res.json({
-            ownProfile: true
-        });
-    }
-
-    db.getProfileById(req.params.userId)
-        .then(response => {
-            res.json(response.rows[0]);
+app.post('/updateBeer', (req, res) => {
+    db.updateBeer(req.body.favBeer, req.session.user.id)
+        .then(() => {
+            req.session.user.favBeer = req.body.favBeer;
+            // we always need to send response when we update cookie!
+            res.json({
+                success: true
+            });
+        })
+        .catch(() => {
+            res.status(500).json({
+                success: false
+            });
         });
 });
 
+app.post('/updateBar', (req, res) => {
+    db.updateBar(req.body.favBar, req.session.user.id)
+        .then(() => {
+            req.session.user.favBar = req.body.favBar;
+            // we always need to send response when we update cookie!
+            res.json({
+                success: true
+            });
+        })
+        .catch(() => {
+            res.status(500).json({
+                success: false
+            });
+        });
+});
+
+
+app.get('/get-user/:userId', (req, res) => {
+    db.getProfileById(req.params.userId)
+        .then(response => {
+            console.log({
+                ...response.rows[0], ownProfile: true
+            });
+            if (req.params.userId == req.session.user.id) {
+                return res.json({
+                    ...response.rows[0], ownProfile: true
+                });
+            } else {
+                res.json(response.rows[0]);
+            }
+        });
+});
 
 app.get('/friends/:otherId', (req, res) => {
 
     let userId = req.session.user.id;
     let otherId = req.params.otherId;
 
-    console.log('inside app.get for users', userId, otherId);
-
     db.getFriendshipStatus(userId, otherId)
         .then(response => {
-            console.log(response.rows[0]);
             res.json(response.rows[0]);
         });
 });
 
-
 app.post('/friends/:otherId', (req, res) => {
     let userId = req.session.user.id;
     let otherId = req.params.otherId;
-
-    console.log('inside app.post for users', userId, otherId);
 
     db.newFriendRequest(userId, otherId)
         .then((response) => {
@@ -249,7 +280,6 @@ app.post('/friends/:otherId', (req, res) => {
         });
 
 });
-
 
 app.post('/friends/cancel/:otherId', (req,res) => {
     let userId = req.session.user.id;
@@ -291,11 +321,20 @@ app.post('/friends/end/:otherId', (req, res) => {
 
 });
 
-
 app.get('/myfriends', (req, res) => {
     db.getFriendsWannabes(req.session.user.id)
         .then(response => {
             res.json(response.rows);
+        });
+});
+
+app.get('/fof/:userId', (req, res) => {
+    db.getFriendsOfFriends(req.params.userId)
+        .then(response => {
+            console.log('fof', response.rows);
+            res.json({
+                fof: response.rows.filter(row => row.id != req.session.user.id)
+            });
         });
 });
 
@@ -311,7 +350,7 @@ server.listen(8080, function() {
     console.log("I'm listening.");
 });
 
-// *************************** SOCKET STUFF ***********************
+// ******************* SOCKET STUFF *****************
 let onlineUsers = {};
 
 // inside this block sessions is accessed by socket.request.session
@@ -348,7 +387,6 @@ io.on('connection', socket => {
     db.getChatMessages().then(response => {
         let msgData = [];
         response.rows.forEach(row => {
-            // row.localTime = row.msg_time.toLocaleDateString('de-DE', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' });
             row.localTime = moment(row.msg_time, 'MMDD, h:mm').fromNow();
             msgData.push(row);
         });
