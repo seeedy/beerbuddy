@@ -12,6 +12,8 @@ import Chat from './chat';
 import EditProfile from './editProfile';
 import FriendsOfFriends from './fof';
 import Search from './search';
+import Favicon from 'react-favicon';
+
 
 export default class App extends React.Component {
     constructor(props) {
@@ -90,7 +92,10 @@ export default class App extends React.Component {
         }
         return (
             <BrowserRouter>
+
                 <div id="page-outer">
+                    <Favicon url="/img/pint_icon.png" />
+
                     <div className="header">
 
                         <div className="header-links">

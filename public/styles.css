@@ -173,7 +173,7 @@ button:focus {
 
 .header {
     position: relative;
-    border-bottom: 1px solid dimgrey;
+    border-bottom: 1px solid #e6ecf0;
     height: 54px;
     background: royalblue;
     display: flex;
@@ -253,6 +253,10 @@ button:focus {
     font-size: 1.2rem;
 }
 
+.fa-edit {
+    cursor: pointer;
+}
+
 /********************** APP ***********************/
 /*************************************************/
 
@@ -326,9 +330,7 @@ button:focus {
     padding: 40px 20px;
     background: gold;
     border: 4px solid dimgrey;
-    /* border-top: 80px solid white; */
     border-radius: 15%;
-    /* box-shadow: inset 0 0 50px chocolate; */
     z-index: 99;
 }
 
@@ -569,7 +571,7 @@ button:focus {
 .send-msg-btn {
     font-size: 1.2rem;
     float: right;
-    padding: 20px 17px;
+    padding: 20px 20px;
     background: royalblue;
     color: white;
     border-right: 1px solid #e6ecf0;
@@ -584,7 +586,7 @@ button:focus {
 }
 
 #search-bar {
-    border: 1px solid dimgrey;
+    border: 1px solid #e6ecf0;
     background: white;
     padding: 5px;
     border-radius: 25px;

@@ -2,6 +2,8 @@ import React from 'react';
 import Registration from './registration';
 import Login from './login';
 import { Link, HashRouter, Route } from 'react-router-dom';
+import Favicon from 'react-favicon';
+
 
 export default function Welcome() {
 
@@ -16,6 +18,9 @@ export default function Welcome() {
     return (
 
         <div className="wrapper">
+
+            <Favicon url="/img/pint_icon.png" />
+
             <h1>Welcome to</h1>
             <h1 style={logoStyle}>
                 <i className="far fa-heart"></i>

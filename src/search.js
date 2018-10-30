@@ -45,7 +45,10 @@ export default class Search extends React.Component {
                         results: response.data
                     });
                 });
-            this.results.classList.remove('no-before');
+            if (this.state.results) {
+                this.results.classList.remove('no-before');
+
+            }
 
         }
 
