@@ -4,3 +4,6 @@ BeerBuddy is a social network site that I've built during my time at coding boot
 
 Tech:
 Node, Express, React, Redux, Socket.io
+
+Link:
+https://mybeerbuddy.herokuapp.com/
