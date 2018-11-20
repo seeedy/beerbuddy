@@ -5,7 +5,7 @@ BeerBuddy is a social network site that I've built during my time at coding boot
 By visiting a friends' profile, users see their friends. Other online users are displayed and there is a search function to look for other profiles. The site also has a public chat room. 
 
 Tech:
-Node, Express, React, Redux, Socket.io, AWS
+Node, Express, React, Redux, Socket.io, PostgreSQL
 
 Link:
 https://mybeerbuddy.herokuapp.com/
